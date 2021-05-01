@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../modules/User");
 const jwt = require("jsonwebtoken");
 const Validation = require("../lib/validation");
-
+//comment
 const validate = new Validation();
 
 class AuthController {

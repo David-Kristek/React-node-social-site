@@ -1,0 +1,95 @@
+import React, { useState } from "react";
+import { Modal, Button, Form, Alert } from "react-bootstrap";
+import { GoogleLogin } from "react-google-login";
+import { googleLogin } from "../../api/auth";
+import "../../App.css";
+
+interface Props {
+  close: () => void;
+  setPopup: (str: string) => void;
+}
+const responseSuccessGoogle = (response: any) => {
+  googleLogin(response);
+};
+const responseErrorGoogle = (response: any) => {
+  console.log(response);
+};
+
+function Login({ close, setPopup }: Props) {
+  const [error, setError] = useState<string | null>(null);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const handleSubmit = () => {};
+  return (
+    <div>
+      <Modal.Header closeButton>
+        <Modal.Title>Log in</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Alert
+          variant="danger"
+          onClose={() => setError("")}
+          show={!!error}
+          dismissible
+        >
+          {error}
+        </Alert>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </Form.Group>
+          <div className="d-flex justify-content-between">
+            <p>
+              Dont have account?
+              <a
+                className="text-primary point"
+                onClick={() => {
+                  setPopup("register");
+                }}
+              >
+                {" "}
+                Register
+              </a>
+            </p>
+            <Button variant="primary" type="submit">
+              {loading ? "Loading" : "Submit"}
+            </Button>
+          </div>
+        </Form>
+        <h5 className="mt-4 text-center border-top pt-4">Continue with google: </h5>
+        <div className="center mt-3 mb-3">
+          <GoogleLogin
+            clientId="236995755291-85hhe3gi2eaofgemhvcbv1horm067upu.apps.googleusercontent.com"
+            buttonText="Login in with google"
+            onSuccess={responseSuccessGoogle}
+            onFailure={responseErrorGoogle}
+            cookiePolicy={"single_host_origin"}
+          />
+        </div>
+      </Modal.Body>
+    </div>
+  );
+}
+
+export default Login;
