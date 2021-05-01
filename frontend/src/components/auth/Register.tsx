@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, Alert } from "react-bootstrap";
+import { Modal, Button, Form, Alert, Spinner } from "react-bootstrap";
 import { GoogleLogin } from "react-google-login";
 import { googleLogin } from "../../api/auth";
 import { register } from "../../api/auth";
+import "../../App.css";
 
 interface Props {
   close: () => void;
   setPopup: (str: string) => void;
+  setNowLogin: (bl: boolean) => void;
 }
 const responseSuccessGoogle = (response: any) => {
   googleLogin(response);
@@ -15,8 +17,8 @@ const responseErrorGoogle = (response: any) => {
   console.log(response);
 };
 
-function Register({ close, setPopup }: Props) {
-  const [error, setError] = useState<string | null>(null);
+function Register({ close, setPopup, setNowLogin }: Props) {
+  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,9 +26,16 @@ function Register({ close, setPopup }: Props) {
   const [password_confirmation, setPasswordConf] = useState("");
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     register({ name, password, email, password_confirmation }).then((res) => {
-      console.log(res);
-      //setError | history.push("/")
+      if (res === "now login") {
+        // history.push("/")
+        setNowLogin(true);
+        setPopup("login");
+      } else {
+        setError(res);
+      }
+      setLoading(false);
     });
   };
   return (
@@ -35,9 +44,9 @@ function Register({ close, setPopup }: Props) {
         <Modal.Title>Register</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <Alert
+        <Alert
           variant="danger"
-          onClose={() => setError(null)}
+          onClose={() => setError("")}
           show={!!error}
           dismissible
         >
@@ -45,15 +54,15 @@ function Register({ close, setPopup }: Props) {
         </Alert>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicUsername">
-            <Form.Label>Username</Form.Label>
+            <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter username"
+              placeholder="Enter your name"
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
               }}
-              isInvalid={error?.includes("name")}
+              isInvalid={error.includes("name")}
             />
           </Form.Group>
           <Form.Label>Email address</Form.Label>
@@ -65,7 +74,7 @@ function Register({ close, setPopup }: Props) {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              isInvalid={email?.includes("name")}
+              isInvalid={error.includes("email") || error.includes("Email")}
             />
           </Form.Group>
 
@@ -78,13 +87,8 @@ function Register({ close, setPopup }: Props) {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
-              isInvalid={"password" in errors}
+              isInvalid={error.includes("password")}
             />
-            {"password" in errors && (
-              <Form.Control.Feedback type="invalid">
-                {/* {errors.password} */}
-              </Form.Control.Feedback>
-            )}
           </Form.Group>
           <Form.Group controlId="formPasswordConfirmation">
             <Form.Label>Confirm Password</Form.Label>
@@ -95,13 +99,8 @@ function Register({ close, setPopup }: Props) {
               onChange={(e) => {
                 setPasswordConf(e.target.value);
               }}
-              isInvalid={"password" in errors}
+              isInvalid={error.includes("password")}
             />
-            {"password" in errors && (
-              <Form.Control.Feedback type="invalid">
-                {/* {errors.password} */}
-              </Form.Control.Feedback>
-            )}
           </Form.Group>
 
           <div className="d-flex justify-content-between">
@@ -117,8 +116,12 @@ function Register({ close, setPopup }: Props) {
                 Login
               </a>
             </p>
-            <Button variant="primary" type="submit">
-              {loading ? "Loading" : "Submit"}
+            <Button variant="primary submit" type="submit">
+              {loading ? (
+                <Spinner animation="border" variant="light" />
+              ) : (
+                "Submit"
+              )}
             </Button>
           </div>
         </Form>

@@ -10,7 +10,7 @@ class Validation {
         .equal(Joi.ref("password"))
         .required()
         .label("Confirm password")
-        .messages({ "any.only": "Hesla musí být stejná" }),
+        .messages({ "any.only": "Passwords must match" }),
     });
     return schema.validate(data);
   }

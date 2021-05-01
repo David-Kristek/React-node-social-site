@@ -11,6 +11,7 @@ interface Props {
     showPopup: boolean, 
 }
 function AppContainer({ children, popup, setPopup, showPopup, setShowPopup }: Props) {
+    const [nowLogin, setNowLogin] = useState(false); 
     const close = () => {
         setShowPopup(false);
     }
@@ -19,10 +20,10 @@ function AppContainer({ children, popup, setPopup, showPopup, setShowPopup }: Pr
             <>
                 <Modal show={showPopup} onHide={close}>
                     {popup === "login" && (
-                        <Login close={close} setPopup={setPopup} />
+                        <Login close={close} setPopup={setPopup} nowLogin={nowLogin} setNowLogin={setNowLogin} />
                     )}
                     {popup === "register" && (
-                        <Register close={close} setPopup={setPopup} />
+                        <Register close={close} setPopup={setPopup} setNowLogin={setNowLogin} />
                     )}
                 </Modal>
                 { children}

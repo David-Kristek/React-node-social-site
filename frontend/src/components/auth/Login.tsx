@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, Alert } from "react-bootstrap";
+import { Modal, Button, Form, Alert, Spinner } from "react-bootstrap";
 import { GoogleLogin } from "react-google-login";
 import { googleLogin } from "../../api/auth";
 import "../../App.css";
@@ -8,6 +8,8 @@ import { login } from "../../api/auth";
 interface Props {
   close: () => void;
   setPopup: (str: string) => void;
+  setNowLogin: (bl: boolean) => void;
+  nowLogin: boolean;
 }
 const responseSuccessGoogle = (response: any) => {
   googleLogin(response);
@@ -16,7 +18,7 @@ const responseErrorGoogle = (response: any) => {
   console.log(response);
 };
 
-function Login({ close, setPopup }: Props) {
+function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -25,8 +27,7 @@ function Login({ close, setPopup }: Props) {
     e.preventDefault();
     login({ email, password }).then((res) => {
       // console.log(res);
-      //setError | history.pusch("/")
-
+      //setError | history.pusch("/") | setPopup("")
     });
   };
   return (
@@ -35,6 +36,14 @@ function Login({ close, setPopup }: Props) {
         <Modal.Title>Log in</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <Alert
+          variant="success"
+          onClose={() => setNowLogin(false)}
+          show={nowLogin}
+          dismissible
+        >
+          Succesfully registered, now login
+        </Alert>
         <Alert
           variant="danger"
           onClose={() => setError(null)}
@@ -80,8 +89,12 @@ function Login({ close, setPopup }: Props) {
                 Register
               </a>
             </p>
-            <Button variant="primary" type="submit">
-              {loading ? "Loading" : "Submit"}
+            <Button variant="primary submit" type="submit">
+              {loading ? (
+                <Spinner animation="border" variant="light" />
+              ) : (
+                "Submit"
+              )}
             </Button>
           </div>
         </Form>
