@@ -3,6 +3,7 @@ import { Modal, Button, Form, Alert } from "react-bootstrap";
 import { GoogleLogin } from "react-google-login";
 import { googleLogin } from "../../api/auth";
 import "../../App.css";
+import { login } from "../../api/auth";
 
 interface Props {
   close: () => void;
@@ -20,7 +21,14 @@ function Login({ close, setPopup }: Props) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const handleSubmit = () => {};
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    login({ email, password }).then((res) => {
+      // console.log(res);
+      //setError | history.pusch("/")
+
+    });
+  };
   return (
     <div>
       <Modal.Header closeButton>
@@ -29,7 +37,7 @@ function Login({ close, setPopup }: Props) {
       <Modal.Body>
         <Alert
           variant="danger"
-          onClose={() => setError("")}
+          onClose={() => setError(null)}
           show={!!error}
           dismissible
         >
@@ -77,7 +85,9 @@ function Login({ close, setPopup }: Props) {
             </Button>
           </div>
         </Form>
-        <h5 className="mt-4 text-center border-top pt-4">Continue with google: </h5>
+        <h5 className="mt-4 text-center border-top pt-4">
+          Continue with google:{" "}
+        </h5>
         <div className="center mt-3 mb-3">
           <GoogleLogin
             clientId="236995755291-85hhe3gi2eaofgemhvcbv1horm067upu.apps.googleusercontent.com"

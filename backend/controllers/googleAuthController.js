@@ -23,6 +23,7 @@ class GoogleAuthController {
       name: payload.name,
       email: payload.email,
       image: payload.picture,
+      password: "google-log",
     };
     const userExist = await User.findOne({ email: user.email });
     if (!userExist) {
@@ -36,9 +37,10 @@ class GoogleAuthController {
     }
     return res.json({ token: tokenId, user });
   }
-  isLogged(req, res) { //protected route with google and in route checkAuth.js
+  isLogged(req, res) {
+    //protected route with google and in route checkAuth.js
     if (!req.user.email) return res.status(402).send("unauthorized");
-    return res.json({ msg: "success", user: req.user})
+    return res.json({ msg: "success", user: req.user });
   }
 }
 module.exports = GoogleAuthController;

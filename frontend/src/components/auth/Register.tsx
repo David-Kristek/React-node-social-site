@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import { GoogleLogin } from "react-google-login";
 import { googleLogin } from "../../api/auth";
+import { register } from "../../api/auth";
 
 interface Props {
   close: () => void;
@@ -15,20 +16,33 @@ const responseErrorGoogle = (response: any) => {
 };
 
 function Register({ close, setPopup }: Props) {
-  const handleSubmit = () => {};
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConf] = useState("");
-
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    register({ name, password, email, password_confirmation }).then((res) => {
+      console.log(res);
+      //setError | history.push("/")
+    });
+  };
   return (
     <div>
       <Modal.Header closeButton>
         <Modal.Title>Register</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+      <Alert
+          variant="danger"
+          onClose={() => setError(null)}
+          show={!!error}
+          dismissible
+        >
+          {error}
+        </Alert>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicUsername">
             <Form.Label>Username</Form.Label>
@@ -39,13 +53,8 @@ function Register({ close, setPopup }: Props) {
               onChange={(e) => {
                 setName(e.target.value);
               }}
-              isInvalid={"name" in errors}
+              isInvalid={error?.includes("name")}
             />
-            {"name" in errors && (
-              <Form.Control.Feedback type="invalid">
-                {/* {errors.name} */}
-              </Form.Control.Feedback>
-            )}
           </Form.Group>
           <Form.Label>Email address</Form.Label>
           <Form.Group controlId="formBasicEmail">
@@ -56,13 +65,8 @@ function Register({ close, setPopup }: Props) {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              isInvalid={"email" in errors}
+              isInvalid={email?.includes("name")}
             />
-            {"email" in errors && (
-              <Form.Control.Feedback type="invalid">
-                {/* {errors.email} */}
-              </Form.Control.Feedback>
-            )}
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
@@ -102,7 +106,7 @@ function Register({ close, setPopup }: Props) {
 
           <div className="d-flex justify-content-between">
             <p>
-              Already have account? 
+              Already have account?
               <a
                 className="text-primary point"
                 onClick={() => {
@@ -118,7 +122,9 @@ function Register({ close, setPopup }: Props) {
             </Button>
           </div>
         </Form>
-        <h5 className="mt-4 text-center border-top pt-4">Continue with google: </h5>
+        <h5 className="mt-4 text-center border-top pt-4">
+          Continue with google:{" "}
+        </h5>
         <div className="center mt-3 mb-3">
           <GoogleLogin
             clientId="236995755291-85hhe3gi2eaofgemhvcbv1horm067upu.apps.googleusercontent.com"

@@ -27,7 +27,7 @@ nav ul{
   /* width: 73px;
   right: calc(10vw + 220px); */
   height: 4px;
-  background-color: #1E6689;
+  background-color: #31B8FA;
   position: absolute;
   transition: right 0.3s ease;
 }

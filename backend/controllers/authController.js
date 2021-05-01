@@ -6,13 +6,14 @@ const Validation = require("../lib/validation");
 const validate = new Validation();
 
 class AuthController {
-
   async register(req, res) {
-    const { error } = validate.register(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    req.body = await JSON.parse(req.body.body);
+    console.log(req.body);
+    const { error } = validate.register(req.body); //dodelat uploadnuti obrazku
+    if (error) return res.status(200).send(error.details[0].message);
 
     const emailExist = await User.findOne({ email: req.body.email });
-    if (emailExist) return res.status(400).send("Email already exists");
+    if (emailExist) return res.status(200).send("Email already exists");
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -20,23 +21,29 @@ class AuthController {
       name: req.body.name,
       email: req.body.email,
       password: hashedPassword,
+      image: "zatim zadny"
     });
     try {
       const save = await user.save();
-      return res.json(save);
+      return res.send("Succesfully registered");
     } catch (err) {
-      return res.status(400).send(err);
+      return res.status(200).send(err);
     }
   }
   async login(req, res) {
+
+    req.body = await JSON.parse(req.body.body);
+    console.log(req.body);
     const { error } = validate.login(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return res.send(error.details[0].message);
 
     const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).send("Email or password is wrong");
+    if (!user) return res.send("Email or password is wrong");
+    if (user.password === "google-log")
+      return res.send("Please log in with google");
 
     const validPass = await bcrypt.compare(req.body.password, user.password);
-    if (!validPass) return res.status(400).send("Email or password is wrong");
+    if (!validPass) return res.send("Email or password is wrong");
     console.log(process.env.TOKEN_SECRET);
     const token = jwt.sign(
       {
@@ -48,6 +55,5 @@ class AuthController {
     // return res.send("Logged in");
   }
 }
-
 
 module.exports = AuthController;
