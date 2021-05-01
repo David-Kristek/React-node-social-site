@@ -35,7 +35,10 @@ class GoogleAuthController {
         return res.status(400).send(err);
       }
     }
-    return res.json({ token: tokenId, user });
+    return res.json({ token: tokenId, user: {
+      name: user.name,
+      email: user.email,
+    } });
   }
   isLogged(req, res) {
     //protected route with google and in route checkAuth.js

@@ -35,15 +35,15 @@ class AuthController {
     req.body = await JSON.parse(req.body.body);
     console.log(req.body);
     const { error } = validate.login(req.body);
-    if (error) return res.send(error.details[0].message);
+    if (error) return res.json({error: error.details[0].message});
 
     const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.send("Email or password is wrong");
+    if (!user) return res.json({error: "Email or password is wrong"});
     if (user.password === "google-log")
-      return res.send("Please log in with google");
+      return res.json({error: "Please log in with google"});
 
     const validPass = await bcrypt.compare(req.body.password, user.password);
-    if (!validPass) return res.send("Email or password is wrong");
+    if (!validPass) return res.json({error: "Email or password is wrong"});
     console.log(process.env.TOKEN_SECRET);
     const token = jwt.sign(
       {
@@ -51,7 +51,10 @@ class AuthController {
       },
       process.env.TOKEN_SECRET
     );
-    return res.header("auth-token", token).send(token);
+    return res.json({token: token, user: {
+      name: user.name,
+      email: user.email
+    }});
     // return res.send("Logged in");
   }
 }

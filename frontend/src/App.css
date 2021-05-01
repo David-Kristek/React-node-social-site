@@ -1,15 +1,14 @@
-.center{
+.center {
   display: flex;
   justify-content: center;
 }
-.point{
+.point {
   cursor: pointer;
 }
 
-.submit{
+.submit {
   width: 80px;
 }
-
 
 nav {
   padding: 20px 10%;
@@ -20,45 +19,56 @@ nav img {
   width: 200px;
   height: 57px;
 }
-nav ul{
+nav ul {
   display: flex;
   list-style: none;
   width: 350px;
 }
-.underline{
+.underline {
   top: 58px;
   /* width: 73px;
   right: calc(10vw + 220px); */
   height: 4px;
-  background-color: #31B8FA;
+  background-color: #31b8fa;
   position: absolute;
   transition: right 0.3s ease;
 }
-.home-nav{
+.home-nav {
   width: 73px;
   right: calc(10vw + 220px);
 }
-.about-nav{
+.about-nav {
   right: calc(10vw + 115px);
   width: 75px;
 }
-.log-nav{
+.log-nav {
   right: calc(9vw);
   width: 85px;
 }
-nav ul li{
+.nav-user {
+  position: absolute;
+  right: 5vw;
+  font-size: 1.5em;
+}
+.nav-user svg {
+  padding-left: 8px;
+  position: absolute;
+  color: #31b8fa;
+  top: 5px;
+}
+nav ul li {
   display: block;
   height: 70px;
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0 20px;
 }
-nav ul li:nth-child(3){
+nav ul li:nth-child(3) {
   padding-left: 2rem;
 }
-nav ul li svg{
+nav ul li svg {
   padding-left: 5px;
   position: absolute;
-  color: #31B8FA; 
-  top: 23px
+  color: #31b8fa;
+  top: 23px;
 }

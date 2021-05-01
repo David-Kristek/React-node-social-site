@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Alert, Spinner } from "react-bootstrap";
 import { GoogleLogin } from "react-google-login";
+import { useGlobalContext } from "../../context";
 import { googleLogin } from "../../api/auth";
 import "../../App.css";
 import { login } from "../../api/auth";
@@ -11,24 +12,43 @@ interface Props {
   setNowLogin: (bl: boolean) => void;
   nowLogin: boolean;
 }
-const responseSuccessGoogle = (response: any) => {
-  googleLogin(response);
-};
-const responseErrorGoogle = (response: any) => {
-  console.log(response);
-};
 
 function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
+  const { setUser } = useGlobalContext();
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     login({ email, password }).then((res) => {
-      // console.log(res);
-      //setError | history.pusch("/") | setPopup("")
+      console.log(res);
+      if (res?.msg === "success") {
+        setUser({
+          logged: true,
+          name: res.user.name,
+          email: res.user.email,
+        });
+        setError(null);
+        setPopup("");
+      } else {
+        setError(res);
+      }
+      setLoading(false);
     });
+  };
+  const responseSuccessGoogle = (response: any) => {
+    googleLogin(response).then((res) => {
+      setUser({
+        logged: true,
+        name: res?.user.name,
+        email: res?.user.email,
+      });
+    });
+  };
+  const responseErrorGoogle = (response: any) => {
+    console.log(response);
   };
   return (
     <div>
@@ -62,6 +82,7 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
+              isInvalid={!!error}
             />
           </Form.Group>
 
@@ -74,6 +95,7 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
+              isInvalid={!!error}
             />
           </Form.Group>
           <div className="d-flex justify-content-between">

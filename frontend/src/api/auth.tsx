@@ -13,7 +13,8 @@ export const googleLogin = async (response: any) => {
     console.log(resp);
     if ("token" in resp.data) {
       localStorage.setItem("token", token);
-      isLogged("google");
+      // isLogged("google");
+      return { msg: "success", user: resp.data.user };
     }
   } catch (err) {
     console.log(err);
@@ -54,6 +55,11 @@ export const login = async (data: any) => {
     if ("token" in resp.data) {
       localStorage.setItem("token", token);
       // isLogged("JWT");
+      return { msg: "success", user: resp.data.user };
+    } else if ("error" in resp.data) {
+      return resp.data.error;
+    } else {
+      return "Something went wrong";
     }
   } catch (err) {
     console.log(err);
@@ -70,11 +76,9 @@ export const register = async (data: any) => {
     if (resp.data === "Succesfully registered") {
       console.log("here we go");
       return "now login";
-    }
-    else if(resp.data){
+    } else if (resp.data) {
       return resp.data; //error
-    }
-    else {
+    } else {
       return "Something went wrong"; //server error
     }
   } catch (err) {
