@@ -45,6 +45,9 @@ nav ul {
   right: calc(9vw);
   width: 85px;
 }
+.nav-user:hover .nav-dropdown{
+  display: block;
+}
 .nav-user {
   position: absolute;
   right: 5vw;
@@ -72,11 +75,41 @@ nav ul li svg {
   color: #31b8fa;
   top: 23px;
 }
-.nav-profile-pic{
+.nav-profile-pic {
   /* padding-left:  */
   position: absolute;
   left: 10.2vw;
   border-radius: 50%;
   max-width: 40px;
   max-height: 40px;
+}
+.nav-dropdown {
+  display: none;
+  margin-top: 5px;
+  position: absolute;
+}
+.nav-dropdown ul{
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  border: 3px solid rgb(129, 129, 129);
+  border-radius: 5%;
+  margin-left: 1vw;
+}
+.nav-dropdown ul li {
+  text-align: center;
+  font-size: 0.83em;
+  height: auto;
+  padding: 3px 0 !important;
+  border-top: 2px solid rgb(161, 161, 161); 
+  width: 100%;
+  background-color: rgb(248, 248, 248);
+}
+.nav-dropdown ul li:nth-child(1) {
+  border: none;
+}
+.nav-dropdown ul li:hover{
+  background-color: rgb(236, 236, 236);
 }

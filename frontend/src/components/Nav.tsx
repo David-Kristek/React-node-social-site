@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useGlobalContext } from "../context";
@@ -49,7 +50,22 @@ function Nav({ setPopup, setShowPopup }: Props) {
           </li>
           {user.logged ? (
             <li className="nav-user">
-              {user.name} {user.picture === "zatim zadny" || !user.picture ? <FontAwesomeIcon icon={faUser} size="lg" /> : <img src={user.picture} alt="profile picture" className="nav-profile-pic"/> }
+              {user.name}
+              {user.picture === "zatim zadny" || !user.picture ? (
+                <FontAwesomeIcon icon={faUser} size="lg" />
+              ) : (
+                <img
+                  src={user.picture}
+                  alt="profile picture"
+                  className="nav-profile-pic"
+                />
+              )}
+              <div className="nav-dropdown">
+                <ul>
+                  <li>Settings</li>
+                  <li>Logout</li>
+                </ul>
+              </div>
             </li>
           ) : (
             <li
