@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import { useGlobalContext } from '../context';
 function Homie() {
-    const { setPage, page } = useGlobalContext();
+    const { setPage } = useGlobalContext();
 
     useEffect(() => {
         setPage("home");
-        console.log(page);
     }, []);
 
     return (

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useGlobalContext } from "../context";
+import { Link } from "react-router-dom";
 import "../App.css";
 interface Props {
   setPopup: (str: String) => void;
@@ -36,7 +36,7 @@ function Nav({ setPopup, setShowPopup }: Props) {
               setUnderline(page);
             }}
           >
-            Home
+            <Link to="/">Home</Link>
           </li>
           <li
             onMouseOver={() => {
@@ -46,7 +46,7 @@ function Nav({ setPopup, setShowPopup }: Props) {
               setUnderline(page);
             }}
           >
-            About
+            <Link to="/about">About</Link>
           </li>
           {user.logged ? (
             <li className="nav-user">
@@ -62,6 +62,9 @@ function Nav({ setPopup, setShowPopup }: Props) {
               )}
               <div className="nav-dropdown">
                 <ul>
+                  <li>
+                    <Link to="add">Add post</Link>
+                  </li>
                   <li>Settings</li>
                   <li>Logout</li>
                 </ul>
