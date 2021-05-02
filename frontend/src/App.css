@@ -1,3 +1,12 @@
+.font1 {
+  font-size: 22px;
+}
+.font2 {
+  font-size: 20px;
+}
+.font3 {
+  font-size: 18px;
+}
 .center {
   display: flex;
   justify-content: center;
@@ -5,17 +14,23 @@
 .point {
   cursor: pointer;
 }
+.link{
+  color: #2360D8;
+  text-decoration-line: underline;
+  cursor: pointer;
+}
+
 
 .submit {
   width: 80px;
 }
-
 nav {
-  padding: 20px 10%;
+  padding: 20px 10% 10px;
   display: flex;
   justify-content: space-between;
 }
-nav a, nav a:hover{
+nav a,
+nav a:hover {
   text-decoration: none;
   color: unset;
 }
@@ -49,7 +64,7 @@ nav ul {
   right: calc(9vw);
   width: 85px;
 }
-.nav-user:hover .nav-dropdown{
+.nav-user:hover .nav-dropdown {
   display: block;
 }
 .nav-user {
@@ -92,7 +107,7 @@ nav ul li svg {
   margin-top: 5px;
   position: absolute;
 }
-.nav-dropdown ul{
+.nav-dropdown ul {
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -107,13 +122,60 @@ nav ul li svg {
   font-size: 0.83em;
   height: auto;
   padding: 3px 0 !important;
-  border-top: 2px solid rgb(161, 161, 161); 
+  border-top: 2px solid rgb(161, 161, 161);
   width: 100%;
   background-color: rgb(248, 248, 248);
 }
 .nav-dropdown ul li:nth-child(1) {
   border: none;
 }
-.nav-dropdown ul li:hover{
+.nav-dropdown ul li:hover {
   background-color: rgb(236, 236, 236);
+}
+.checkmark {
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkmark:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.input {
+  padding: 12px 10px;
+  border: 2px solid #71b0d3;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 0px #77b7db;
+  border-radius: 4px;
+  font-size: 20px;
+
+}
+.input:focus{
+  outline: none;
+  box-shadow: 6px 6px 2px #5E9ABB;
+  border: 3px solid #5E9ABB;
+}
+.fl-between{
+  display: flex;
+  justify-content: space-between;
 }
