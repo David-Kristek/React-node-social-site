@@ -13,17 +13,19 @@ export const googleLogin = async (response: any) => {
     console.log(resp);
     if ("token" in resp.data) {
       localStorage.setItem("token", token);
+      localStorage.setItem("auth-type", "google"); 
       // isLogged("google");
-      return { msg: "success", user: resp.data.user };
+      return { msg: "success", user: resp.data.user, error: "" };
     }
   } catch (err) {
     console.log(err);
   }
+  return {msg: "failed", user: {}, error: "Something went wrong"};
 };
 
-type LogType = "JWT" | "google";
+// type LogType = "JWT" | "google";
 
-export const isLogged = async (type: LogType) => {
+export const isLogged = async (type: string | null) => {
   try {
     const res = await axios({
       method: "GET",
@@ -34,12 +36,12 @@ export const isLogged = async (type: LogType) => {
       },
     });
     if ((res.data.msg = "success" && res.data.user.email)) {
-      console.log("a jedem");
+      return res.data.user; 
     } else {
-      console.log("nope not signed");
+      return false; 
     }
   } catch (err) {
-    console.log("nope not signed");
+    return false; 
   }
 };
 
@@ -54,6 +56,7 @@ export const login = async (data: any) => {
     console.log(resp);
     if ("token" in resp.data) {
       localStorage.setItem("token", token);
+      localStorage.setItem("auth-type", "JWT"); 
       // isLogged("JWT");
       return { msg: "success", user: resp.data.user };
     } else if ("error" in resp.data) {

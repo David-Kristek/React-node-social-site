@@ -49,7 +49,7 @@ function Nav({ setPopup, setShowPopup }: Props) {
           </li>
           {user.logged ? (
             <li className="nav-user">
-              {user.name} <FontAwesomeIcon icon={faUser} size="lg" />
+              {user.name} {user.picture === "zatim zadny" || !user.picture ? <FontAwesomeIcon icon={faUser} size="lg" /> : <img src={user.picture} alt="profile picture" className="nav-profile-pic"/> }
             </li>
           ) : (
             <li

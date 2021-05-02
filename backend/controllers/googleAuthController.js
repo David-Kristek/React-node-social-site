@@ -38,6 +38,7 @@ class GoogleAuthController {
     return res.json({ token: tokenId, user: {
       name: user.name,
       email: user.email,
+      picture: user.image,
     } });
   }
   isLogged(req, res) {

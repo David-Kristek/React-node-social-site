@@ -72,3 +72,11 @@ nav ul li svg {
   color: #31b8fa;
   top: 23px;
 }
+.nav-profile-pic{
+  /* padding-left:  */
+  position: absolute;
+  left: 10.2vw;
+  border-radius: 50%;
+  max-width: 40px;
+  max-height: 40px;
+}

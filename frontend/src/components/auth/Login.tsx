@@ -29,7 +29,9 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
           logged: true,
           name: res.user.name,
           email: res.user.email,
+          picture: res.user.picture,
         });
+        localStorage.setItem("auth-type", "jwt"); 
         setError(null);
         setPopup("");
       } else {
@@ -40,11 +42,17 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
   };
   const responseSuccessGoogle = (response: any) => {
     googleLogin(response).then((res) => {
-      setUser({
-        logged: true,
-        name: res?.user.name,
-        email: res?.user.email,
-      });
+      if (res.msg === "failed") {
+        setError(res.error); 
+      } else {
+        setUser({
+          logged: true,
+          name: res?.user.name,
+          email: res?.user.email,
+          picture: res?.user.picture,
+        });
+        setPopup(""); 
+      }
     });
   };
   const responseErrorGoogle = (response: any) => {

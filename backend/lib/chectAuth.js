@@ -9,7 +9,7 @@ const client = new OAuth2Client(CLIENT_ID);
 const checkAuthenticated = async (req, res, next) => {
   let token = req.header("auth-token"); // token dame pres header - auth-token
   let type = req.header("type");
-  if (!token || !type) return res.status(402).send("unauthorized1");
+  if (!token || !type) return res.status(200).send("unauthorized1");
   let user = {};
   var ticket;
   try {
@@ -18,7 +18,7 @@ const checkAuthenticated = async (req, res, next) => {
         idToken: token,
         audience: CLIENT_ID,
       });
-      if (!ticket) return res.status(402).send("unauthorized2");
+      if (!ticket) return res.status(200).send("unauthorized2");
       const payload = ticket.getPayload();
       user.name = payload.name;
       user.email = payload.email;
@@ -29,10 +29,10 @@ const checkAuthenticated = async (req, res, next) => {
       req.user = await User.findOne({_id: verified._id});
     }
     else{
-      return res.status(402).json({ msg: "unauthorized3"});
+      return res.status(200).json({ msg: "unauthorized3"});
     }
   } catch (err) {
-    return res.status(402).json({ msg: "unauthorized4", err: err });
+    return res.status(200).json({ msg: "unauthorized4", err: err });
   }
 
   next();
