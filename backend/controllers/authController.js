@@ -31,7 +31,8 @@ class AuthController {
     }
   }
   async login(req, res) {
-    req.body = await JSON.parse(req.body.body);
+    //uncomment for postman
+    // req.body = await JSON.parse(req.body.body);  
     console.log(req.body);
     const { error } = validate.login(req.body);
     if (error) return res.json({ error: error.details[0].message });

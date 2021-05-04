@@ -4,20 +4,32 @@ import { faSignInAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useGlobalContext } from "../context";
 import { Link } from "react-router-dom";
 import "../App.css";
-import "../styles/Nav.css"
+import "../styles/Nav.css";
 interface Props {
   setPopup: (str: String) => void;
   setShowPopup: (bl: boolean) => void;
 }
 
 function Nav({ setPopup, setShowPopup }: Props) {
-  const { page, setPage, user } = useGlobalContext();
+  const { page, setPage, user, setUser } = useGlobalContext();
   const [underline, setUnderline] = useState(page);
   const [once, setOnce] = useState(true);
   const login = () => {
     setPopup("login");
     setShowPopup(true);
     // setPage("log")
+  };
+  const logout = () => {
+    if(user.logged){
+      localStorage.removeItem("token"); 
+      localStorage.removeItem("auth-type"); 
+      setUser({
+        logged: false,
+        name: "",
+        email: "",
+        picture: "",
+      });
+    }
   };
   if (page !== "" && once) {
     const pageI = page;
@@ -67,7 +79,7 @@ function Nav({ setPopup, setShowPopup }: Props) {
                     <Link to="add">Add post</Link>
                   </li>
                   <li>Settings</li>
-                  <li>Logout</li>
+                  <li onClick={logout}>Logout</li>
                 </ul>
               </div>
             </li>
