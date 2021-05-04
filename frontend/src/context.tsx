@@ -29,7 +29,7 @@ interface User {
 const AppProvider = ({ children }: Props) => {
   // const [popUp, setPopup] = useState<string>("");
   const [page, setPage] = useState<string>("");
-  const [navigator, setNavigator] = useState<string>("home|add post|bka"); //dodelat!!!!!
+  const [navigator, setNavigator] = useState<string>(""); //dodelat!!!!!
   const [user, setUser] = useState<User>({
     logged: false,
     name: "",

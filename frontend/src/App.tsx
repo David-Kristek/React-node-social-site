@@ -8,6 +8,7 @@ import {
 
 import AppContainer from "./components/AppContainer";
 import Nav from "./components/Nav";
+import Navigator from "./components/Navigation";
 import Home from "./pages/Homie";
 import Add from "./pages/Add";
 import About from "./pages/About";
@@ -25,6 +26,7 @@ function App() {
         setShowPopup={setShowPopup}
       >
         <Nav setPopup={setPopup} setShowPopup={setShowPopup} />
+        <Navigator />
         <Switch>
           <Route exact path="/">
             <Home />

@@ -3,7 +3,6 @@ import { Modal, Button } from "react-bootstrap";
 
 import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
-import Navigator from "./Navigation";
 
 interface Props {
   children: ReactNode;
@@ -26,7 +25,6 @@ function AppContainer({
   if (popup) {
     return (
       <>
-        <Navigator />
         <Modal show={showPopup} onHide={close}>
           {popup === "login" && (
             <Login
@@ -51,7 +49,6 @@ function AppContainer({
     return (
       <>
         {" "}
-        <Navigator />
         {children}
       </>
     );

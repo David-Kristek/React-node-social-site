@@ -4,6 +4,7 @@ import { faSignInAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useGlobalContext } from "../context";
 import { Link } from "react-router-dom";
 import "../App.css";
+import "../styles/Nav.css"
 interface Props {
   setPopup: (str: String) => void;
   setShowPopup: (bl: boolean) => void;

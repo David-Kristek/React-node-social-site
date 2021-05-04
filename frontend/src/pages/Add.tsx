@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,9 +7,14 @@ import "../App.css";
 import "../styles/Add-post.css";
 
 function Add() {
-  const { setPage, page } = useGlobalContext();
+  const { setPage, page, setNavigator } = useGlobalContext();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [categories, setCategories] = useState<string[]>();
+  const [loation, setLoation] = useState("initialState");
   useEffect(() => {
     setPage("home");
+    setNavigator("home|add post");
     console.log(page);
   }, []);
 
@@ -22,12 +27,20 @@ function Add() {
           type="text"
           className="input name"
           placeholder="Enter name of post"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
         />
         <p className="font1">Description</p>
         <textarea
           rows={3}
           className="input"
           placeholder="Enter description  ...."
+          value={description}
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
         ></textarea>
         <p className="font1">Choose categories: </p>
         <div className="category-box">
@@ -45,14 +58,6 @@ function Add() {
           </div>
           <div>
             Zábava
-            <input type="checkbox" className="checkmark" />
-          </div>
-          <div>
-            Kolo
-            <input type="checkbox" className="checkmark" />
-          </div>
-          <div>
-            Kolo
             <input type="checkbox" className="checkmark" />
           </div>
           <div>
@@ -82,7 +87,9 @@ function Add() {
         <p className="font1 link">Add photos</p>
         <p className="font2 mt-1">3 photos uploaded</p>
         <div className="photos"></div>
-        <Button variant="success mt-4 font1" className="upload">Upload post</Button>
+        <Button variant="success mt-4 font1" className="upload">
+          Upload post
+        </Button>
       </div>
     </main>
   );
