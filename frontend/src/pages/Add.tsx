@@ -7,9 +7,8 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { getCategory } from "../api/category";
 import "../App.css";
 import "../styles/Add-post.css";
-
 interface Categories {
-    name: string
+  name: string;
 }
 
 function Add() {
@@ -17,17 +16,18 @@ function Add() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState<Categories[] | null>(null);
-  const [loation, setLoation] = useState("initialState");
+  const [location, setLocation] = useState("");
   useEffect(() => {
     setPage("home");
     setNavigator("home|add post");
-    getCategory().then(res => {
-      if(res) {
+    getCategory().then((res) => {
+      if (res) {
         console.log(res);
-        setCategories(res.data); 
+        setCategories(res.data);
       }
-    })
+    });
   }, []);
+
 
   return (
     <main className="add-post-box">
@@ -56,12 +56,12 @@ function Add() {
         <p className="font1">Choose categories: </p>
         <div className="category-box">
           {categories ? (
-            categories.map((category)=> 
-            <div>
-              {category.name}
-              <input type="checkbox" className="checkmark" />
-            </div>
-            )
+            categories.map((category, index) => (
+              <div key={index}>
+                {category.name}
+                <input type="checkbox" className="checkmark" />
+              </div>
+            ))
           ) : (
             <ReactLoading
               type={"cylon"}
@@ -79,6 +79,10 @@ function Add() {
               type="text"
               className="input map-inp"
               placeholder="Enter name of location or area"
+              value={location}
+              onChange={(e) => {
+                setLocation(e.target.value);
+              }}
             />
             <Button variant="success" className="check">
               <FontAwesomeIcon icon={faCheck} size="2x" />

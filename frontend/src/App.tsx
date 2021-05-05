@@ -12,39 +12,42 @@ import Navigator from "./components/Navigation";
 import Home from "./pages/Homie";
 import Add from "./pages/Add";
 import About from "./pages/About";
-
+import Map from "./mapa/Map"; 
 function App() {
   const [popup, setPopup] = useState<String | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
   return (
-    <Router>
-      <AppContainer
-        popup={popup}
-        setPopup={setPopup}
-        showPopup={showPopup}
-        setShowPopup={setShowPopup}
-      >
-        <Nav setPopup={setPopup} setShowPopup={setShowPopup} />
-        <Navigator />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/add">
-            <Add />
-            {/* protected */}
-          </Route>
-          <Route exact path="/about">
-            <About />
-            {/* protected */}
-          </Route>
-          <Route path="*">
-            <p className="text-danger">Nothings 404!</p>
-          </Route>
-        </Switch>
-      </AppContainer>
-    </Router>
+    <>
+      <Map height="200px" center={{ lat: 50.0755, lng: 14.4378 }} />
+    </>
+    // <Router>
+    //   <AppContainer
+    //     popup={popup}
+    //     setPopup={setPopup}
+    //     showPopup={showPopup}
+    //     setShowPopup={setShowPopup}
+    //   >
+    //     <Nav setPopup={setPopup} setShowPopup={setShowPopup} />
+    //     <Navigator />
+    //     <Switch>
+    //       <Route exact path="/">
+    //         <Home />
+    //       </Route>
+    //       <Route exact path="/add">
+    //         <Add />
+    //         {/* protected */}
+    //       </Route>
+    //       <Route exact path="/about">
+    //         <About />
+    //         {/* protected */}
+    //       </Route>
+    //       <Route path="*">
+    //         <p className="text-danger">Nothings 404!</p>
+    //       </Route>
+    //     </Switch>
+    //   </AppContainer>
+    // </Router>
   );
 }
 
