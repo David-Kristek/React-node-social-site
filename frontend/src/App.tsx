@@ -18,36 +18,36 @@ function App() {
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
   return (
-    <>
-      <Map height="200px" center={{ lat: 50.0755, lng: 14.4378 }} />
-    </>
-    // <Router>
-    //   <AppContainer
-    //     popup={popup}
-    //     setPopup={setPopup}
-    //     showPopup={showPopup}
-    //     setShowPopup={setShowPopup}
-    //   >
-    //     <Nav setPopup={setPopup} setShowPopup={setShowPopup} />
-    //     <Navigator />
-    //     <Switch>
-    //       <Route exact path="/">
-    //         <Home />
-    //       </Route>
-    //       <Route exact path="/add">
-    //         <Add />
-    //         {/* protected */}
-    //       </Route>
-    //       <Route exact path="/about">
-    //         <About />
-    //         {/* protected */}
-    //       </Route>
-    //       <Route path="*">
-    //         <p className="text-danger">Nothings 404!</p>
-    //       </Route>
-    //     </Switch>
-    //   </AppContainer>
-    // </Router>
+    // <>
+    //   <Map height="670px" center={{ lat: 50.0755, lng: 14.4378 }} />
+    // </>
+    <Router>
+      <AppContainer
+        popup={popup}
+        setPopup={setPopup}
+        showPopup={showPopup}
+        setShowPopup={setShowPopup}
+      >
+        <Nav setPopup={setPopup} setShowPopup={setShowPopup} />
+        <Navigator />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/add">
+            <Add />
+            {/* protected */}
+          </Route>
+          <Route exact path="/about">
+            <About />
+            {/* protected */}
+          </Route>
+          <Route path="*">
+            <p className="text-danger">Nothings 404!</p>
+          </Route>
+        </Switch>
+      </AppContainer>
+    </Router>
   );
 }
 

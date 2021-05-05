@@ -7,6 +7,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { getCategory } from "../api/category";
 import "../App.css";
 import "../styles/Add-post.css";
+import useFindInMap from "../mapa/useFindInMap";
 interface Categories {
   name: string;
 }
@@ -17,7 +18,10 @@ function Add() {
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState<Categories[] | null>(null);
   const [location, setLocation] = useState("");
+
+  const onSmallScreen = useFindInMap("ahoj");
   useEffect(() => {
+    setName(onSmallScreen); 
     setPage("home");
     setNavigator("home|add post");
     getCategory().then((res) => {
@@ -27,10 +31,13 @@ function Add() {
       }
     });
   }, []);
-
-
+  // const findMap = () => {
+  //   let result = useFindInMap("Praha");
+  //   console.log(result);
+  // }
   return (
     <main className="add-post-box">
+      {/* <button onClick={findMap}>Find</button> */}
       <h1 className="mb-3">New Post</h1>
       <div className="add-post-form">
         <p className="font1">Name</p>

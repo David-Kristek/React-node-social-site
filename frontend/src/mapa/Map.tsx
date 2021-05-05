@@ -13,6 +13,7 @@ interface MapProps {
   maxZoom?: number;
   baseLayers?: number[];
   children?: React.ReactNode;
+  find?: string;
 }
 
 // Override PreflightCSS presets
@@ -29,6 +30,35 @@ const Map = (props: MapProps) => {
   const mapNode = useRef(null);
   const [map, setMap] = useState(null);
   const { width, height, children } = props;
+  const odpoved = (geocoder: any) => {
+    /* Odpověď */
+    if (!geocoder.getResults()[0].results.length) {
+      alert("Tohle neznáme.");
+      return;
+    }
+
+    var vysledky = geocoder.getResults()[0].results;
+    var data = [];
+    while (vysledky.length) {
+      /* Zobrazit všechny výsledky hledání */
+      var item = vysledky.shift();
+      data.push(
+        item.label + " (" + item.coords.toWGS84(2).reverse().join(", ") + ")"
+      );
+    }
+    alert(data.join("\n"));
+  };
+  const find = (place: string, smapa: any) => {
+    if (smapa) {
+      var geocode = new smapa.Geocoder(place, odpoved, {
+        bbox: [
+          smapa.Coords.fromWGS84(12.09, 51.06),
+          smapa.Coords.fromWGS84(18.87, 48.55),
+        ],
+      });
+    }
+  };
+
   useEffect(() => {
     const onload = () => {
       // @ts-ignore
@@ -66,35 +96,9 @@ const Map = (props: MapProps) => {
           // suggest.addListener("suggest", function (suggestData: any) {
           //   alert(suggestData.phrase);
           // });
-          const odpoved = (geocoder: any) => {
-            /* Odpověď */
-            if (!geocoder.getResults()[0].results.length) {
-              alert("Tohle neznáme.");
-              return;
-            }
 
-            var vysledky = geocoder.getResults()[0].results;
-            var data = [];
-            while (vysledky.length) {
-              /* Zobrazit všechny výsledky hledání */
-              var item = vysledky.shift();
-              data.push(
-                item.label +
-                  " (" +
-                  item.coords.toWGS84(2).reverse().join(", ") +
-                  ")"
-              );
-            }
-            alert(data.join("\n"));
-          };
-          var geocode = new window.SMap.Geocoder("Praha", odpoved, {
-            bbox: [
-              window.SMap.Coords.fromWGS84(12.09, 51.06),
-              window.SMap.Coords.fromWGS84(18.87, 48.55),
-            ],
-          });
+          find("Brno", window.SMap);
           setMap(sMap);
-          console.log("calback");
         }
       });
       return () => {
