@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from "react";
+import ReactLoading from "react-loading";
 import { useGlobalContext } from "../context";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { getCategory } from "../api/category";
 import "../App.css";
 import "../styles/Add-post.css";
+
+interface Categories {
+    name: string
+}
 
 function Add() {
   const { setPage, page, setNavigator } = useGlobalContext();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [categories, setCategories] = useState<string[]>();
+  const [categories, setCategories] = useState<Categories[] | null>(null);
   const [loation, setLoation] = useState("initialState");
   useEffect(() => {
     setPage("home");
     setNavigator("home|add post");
-    console.log(page);
+    getCategory().then(res => {
+      if(res) {
+        console.log(res);
+        setCategories(res.data); 
+      }
+    })
   }, []);
 
   return (
@@ -44,26 +55,22 @@ function Add() {
         ></textarea>
         <p className="font1">Choose categories: </p>
         <div className="category-box">
-          <div>
-            Výlet
-            <input type="checkbox" className="checkmark" />
-          </div>
-          <div>
-            Dovolená
-            <input type="checkbox" className="checkmark" />
-          </div>
-          <div>
-            Myšlenka
-            <input type="checkbox" className="checkmark" />
-          </div>
-          <div>
-            Zábava
-            <input type="checkbox" className="checkmark" />
-          </div>
-          <div>
-            Kolo
-            <input type="checkbox" className="checkmark" />
-          </div>
+          {categories ? (
+            categories.map((category)=> 
+            <div>
+              {category.name}
+              <input type="checkbox" className="checkmark" />
+            </div>
+            )
+          ) : (
+            <ReactLoading
+              type={"cylon"}
+              height={50}
+              width={375}
+              color="white"
+              className="loading-cat"
+            />
+          )}
         </div>
         <p className="font1">Add location</p>
         <div className="fl-between">
@@ -85,7 +92,7 @@ function Add() {
           <div className="map"></div>
         </div>
         <p className="font1 link">Add photos</p>
-        <p className="font2 mt-1">3 photos uploaded</p>
+        <p className="font2 mt-1">0 photos uploaded</p>
         <div className="photos"></div>
         <Button variant="success mt-4 font1" className="upload">
           Upload post

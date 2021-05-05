@@ -46,6 +46,9 @@ main div {
   align-items: center;
   border-radius: 5px;
 }
+.category-box .loading-cat{
+  background-color: unset !important;
+}
 .check {
   height: 55px;
   width: 55px;

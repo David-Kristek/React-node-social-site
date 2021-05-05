@@ -23,7 +23,6 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
     e.preventDefault();
     setLoading(true);
     login({ email, password }).then((res) => {
-      console.log(res);
       if (res?.msg === "success") {
         setUser({
           logged: true,

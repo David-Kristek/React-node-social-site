@@ -1,16 +1,18 @@
 const Category = require("../modules/Category");
-
+const User = require('../modules/User');
 class CategoryController {
   async add(req, res) {
     const { name } = req.body;
     const categoryExists = await Category.findOne({ name: name });
-
+    const { _id } = await User.findOne({email: req.user.email});
     if (categoryExists) {
       return res.json({ err: "Category already exists" });
     }
+
     const category = new Category({
       name: name,
-      createdByUser: req.user._id,
+      approved: false,
+      createdByUser: _id,
     });
     try {
       await category.save();

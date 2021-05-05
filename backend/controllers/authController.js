@@ -32,8 +32,7 @@ class AuthController {
   }
   async login(req, res) {
     //uncomment for postman
-    // req.body = await JSON.parse(req.body.body);  
-    console.log(req.body);
+    req.body = await JSON.parse(req.body.body);  
     const { error } = validate.login(req.body);
     if (error) return res.json({ error: error.details[0].message });
 
@@ -44,7 +43,6 @@ class AuthController {
 
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.json({ error: "Email or password is wrong" });
-    console.log(process.env.TOKEN_SECRET);
     const token = jwt.sign(
       {
         _id: user._id,

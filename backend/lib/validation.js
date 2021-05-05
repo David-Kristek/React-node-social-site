@@ -15,6 +15,7 @@ class Validation {
     return schema.validate(data);
   }
   login(data) {
+
     const schema = Joi.object({
       email: Joi.string().required(),
       password: Joi.string().required(),
