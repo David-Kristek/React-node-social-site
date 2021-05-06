@@ -12,32 +12,45 @@ interface Categories {
   name: string;
 }
 
+interface LocationRes {
+  coords: {
+    x: number;
+    y: number;
+  };
+  label: string;
+  id: number;
+}
+
 function Add() {
   const { setPage, page, setNavigator } = useGlobalContext();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState<Categories[] | null>(null);
   const [location, setLocation] = useState("");
+  const [findResults, setFindResults] = useState<LocationRes[] | null>();
 
-  const onSmallScreen = useFindInMap("ahoj");
+  const { setLoactionToFind, result } = useFindInMap();
   useEffect(() => {
-    setName(onSmallScreen); 
     setPage("home");
     setNavigator("home|add post");
     getCategory().then((res) => {
       if (res) {
-        console.log(res);
         setCategories(res.data);
       }
     });
   }, []);
-  // const findMap = () => {
-  //   let result = useFindInMap("Praha");
-  //   console.log(result);
-  // }
+  const selectLocRes = (coords: { x: number; y: number }, label: string) => {
+    setLocation(label); 
+    setFindResults(null); 
+    //mapa zobrazeni
+  };
+  useEffect(() => {
+    if (result) {
+      setFindResults(result);
+    }
+  }, [result]);
   return (
     <main className="add-post-box">
-      {/* <button onClick={findMap}>Find</button> */}
       <h1 className="mb-3">New Post</h1>
       <div className="add-post-form">
         <p className="font1">Name</p>
@@ -89,15 +102,25 @@ function Add() {
               value={location}
               onChange={(e) => {
                 setLocation(e.target.value);
+                setLoactionToFind(e.target.value);
               }}
             />
             <Button variant="success" className="check">
               <FontAwesomeIcon icon={faCheck} size="2x" />
             </Button>
             <ul className="help font2">
-              <li>Praha</li>
-              <li>Prčice</li>
-              <li>Protějov</li>
+              {findResults && location !== ""
+                ? findResults.slice(0, 3).map((item, index) => (
+                    <li
+                      key={index}
+                      onClick={() => {
+                        selectLocRes(item.coords, item.label);
+                      }}
+                    >
+                      {item.label}
+                    </li>
+                  ))
+                : ""}
             </ul>
           </div>
           <div className="map"></div>
