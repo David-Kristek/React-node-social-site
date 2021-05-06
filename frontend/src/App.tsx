@@ -33,7 +33,7 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/add">
-            <Add />
+            <Add setPopup={setPopup} setShowPopup={setShowPopup} />
             {/* protected */}
           </Route>
           <Route exact path="/about">

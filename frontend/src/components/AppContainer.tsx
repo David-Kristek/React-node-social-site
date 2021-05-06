@@ -3,6 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 
 import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
+import AddCategory from "../components/popups/Addcategory";
 
 interface Props {
   children: ReactNode;
@@ -25,7 +26,7 @@ function AppContainer({
   if (popup) {
     return (
       <>
-        <Modal show={showPopup} onHide={close}>
+        <Modal show={showPopup} onHide={(close)}>
           {popup === "login" && (
             <Login
               close={close}
@@ -39,6 +40,12 @@ function AppContainer({
               close={close}
               setPopup={setPopup}
               setNowLogin={setNowLogin}
+            />
+          )}
+          {popup === "addCategory" && (
+            <AddCategory
+              close={close}
+              setPopup={setPopup}
             />
           )}
         </Modal>

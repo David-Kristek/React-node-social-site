@@ -28,11 +28,9 @@ const StyledMap = styled.div`
 
 const Map = (props: MapProps) => {
   const [loading, setLoading] = useState(true);
-  // useSMap()
   const mapNode = useRef(null);
   const [map, setMap] = useState(null);
   const { width, height, children } = props;
-  // const [makerS, setMakerS] = useState<mapCoors | undefined>(props.marker);
   useEffect(() => {
     const onload = () => {
       // @ts-ignore

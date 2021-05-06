@@ -4,7 +4,6 @@ class CategoryController {
   async add(req, res) {
     const { name } = req.body;
     const categoryExists = await Category.findOne({ name: name });
-    const { _id } = await User.findOne({email: req.user.email});
     if (categoryExists) {
       return res.json({ err: "Category already exists" });
     }
@@ -12,7 +11,7 @@ class CategoryController {
     const category = new Category({
       name: name,
       approved: false,
-      createdByUser: _id,
+      createdByUser: req.user._id,
     });
     try {
       await category.save();

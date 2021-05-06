@@ -13,6 +13,7 @@ import { addPosts } from "../api/post";
 interface Categories {
   name: string;
   _id: string;
+  approved: boolean;
 }
 type mapCoors = {
   x: number;
@@ -23,8 +24,12 @@ interface LocationRes {
   label: string;
   id: number;
 }
+interface Props {
+  setPopup: (str: string | null) => void;
+  setShowPopup: (bl: boolean) => void;
+}
 
-function Add() {
+function Add({ setPopup, setShowPopup }: Props) {
   const { setPage, page, setNavigator } = useGlobalContext();
 
   const [name, setName] = useState("");
@@ -43,8 +48,9 @@ function Add() {
     setNavigator("home|add post");
     getCategory().then((res) => {
       if (res) {
-        setCategories(res.data);
-        console.log(res.data);
+        const filCategory = res.data.filter((item: any) => item.approved === true);
+        setCategories(filCategory);
+        console.log(filCategory);
       }
     });
   }, []);
@@ -111,7 +117,18 @@ function Add() {
             setDescription(e.target.value);
           }}
         ></textarea>
-        <p className="font1">Choose categories: </p>
+        <div className="d-flex justify-content-between">
+          <p className="font1">Choose categories: </p>
+          <p
+            className="font2 link"
+            onClick={() => {
+              setPopup("addCategory");
+              setShowPopup(true);
+            }}
+          >
+            Add category
+          </p>
+        </div>
         <div className="category-box">
           {categories ? (
             categories.map((category, index) => (
