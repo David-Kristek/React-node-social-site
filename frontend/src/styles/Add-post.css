@@ -60,7 +60,6 @@ main div {
   border: 2px solid #000000;
   box-sizing: border-box;
   border-radius: 5px;
-  background-color: green;
 }
 .map-inp {
   width: 80%;

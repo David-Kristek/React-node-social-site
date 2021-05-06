@@ -18,9 +18,7 @@ function App() {
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
   return (
-    // <>
-    //   <Map height="670px" center={{ lat: 50.0755, lng: 14.4378 }} />
-    // </>
+
     <Router>
       <AppContainer
         popup={popup}

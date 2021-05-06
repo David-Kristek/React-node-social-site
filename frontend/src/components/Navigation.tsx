@@ -13,8 +13,10 @@ function Navigator() {
     setNavAr(navigator.split("|"));
   }, [navigator]);
   useEffect(() => {
+    let a = 0; 
     if (navAr) {
       var load = navAr.map((item, key, arr) => {
+        a++; 
         let href = "";
         switch (item) {
           case "home":
@@ -30,14 +32,14 @@ function Navigator() {
         item = capitalizeFirstLetter(item);
         if (arr.length - 1 === key) {
           return (
-            <Link key={key} to={href} className="link font2">
+            <Link key={a} to={href} className="link font2">
               {item}
             </Link>
           );
         }
         return (
           <>
-            <Link key={key} to={href} className="link font2">
+            <Link key={a} to={href} className="link font2">
               {item}
             </Link>{" "}
             {" >"}

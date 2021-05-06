@@ -4,16 +4,19 @@ import styled from "styled-components";
 
 export const MapContext = createContext(null);
 
+type mapCoors = {
+  x: number;
+  y: number;
+};
+
 interface MapProps {
   center: { lat: number; lng: number };
   width?: string;
   height?: string;
   zoom?: number;
-  minZoom?: number;
-  maxZoom?: number;
   baseLayers?: number[];
   children?: React.ReactNode;
-  find?: string;
+  marker?: mapCoors;
 }
 
 // Override PreflightCSS presets
@@ -25,40 +28,11 @@ const StyledMap = styled.div`
 
 const Map = (props: MapProps) => {
   const [loading, setLoading] = useState(true);
-  const [input, setInput] = useState<any>();
   // useSMap()
   const mapNode = useRef(null);
   const [map, setMap] = useState(null);
   const { width, height, children } = props;
-  const odpoved = (geocoder: any) => {
-    /* Odpověď */
-    if (!geocoder.getResults()[0].results.length) {
-      alert("Tohle neznáme.");
-      return;
-    }
-
-    var vysledky = geocoder.getResults()[0].results;
-    var data = [];
-    while (vysledky.length) {
-      /* Zobrazit všechny výsledky hledání */
-      var item = vysledky.shift();
-      data.push(
-        item.label + " (" + item.coords.toWGS84(2).reverse().join(", ") + ")"
-      );
-    }
-    alert(data.join("\n"));
-  };
-  const find = (place: string, smapa: any) => {
-    if (smapa) {
-      var geocode = new smapa.Geocoder(place, odpoved, {
-        bbox: [
-          smapa.Coords.fromWGS84(12.09, 51.06),
-          smapa.Coords.fromWGS84(18.87, 48.55),
-        ],
-      });
-    }
-  };
-
+  // const [makerS, setMakerS] = useState<mapCoors | undefined>(props.marker);
   useEffect(() => {
     const onload = () => {
       // @ts-ignore
@@ -66,40 +40,28 @@ const Map = (props: MapProps) => {
       // @ts-ignore
       window.Loader.load(null, null, () => {
         setLoading(false);
-        if (!map && mapNode) {
-          const { zoom, center } = props;
-          const centerCoords = window.SMap.Coords.fromWGS84(
-            center.lng,
-            center.lat
-          );
-          const sMap = new window.SMap(mapNode.current, centerCoords, zoom);
-          const l = sMap.addDefaultLayer(BaseLayers.TURIST_NEW);
-          l.enable();
+        const { zoom, center, marker } = props;
+        const centerCoords = window.SMap.Coords.fromWGS84(
+          center.lng,
+          center.lat
+        );
+        const sMap = new window.SMap(mapNode.current, centerCoords, zoom);
+        const l = sMap.addDefaultLayer(BaseLayers.TURIST_NEW);
+        l.enable();
 
-          sMap.addDefaultLayer(window.SMap.DEF_BASE).enable();
-          sMap.addDefaultControls();
+        sMap.addDefaultLayer(window.SMap.DEF_BASE).enable();
+        sMap.addDefaultControls();
 
+        if (marker) {
           var makrLayer = new window.SMap.Layer.Marker();
           sMap?.addLayer(makrLayer);
           makrLayer.enable();
-
-          const coords = window.SMap.Coords.fromWGS84(20, 20);
-
-          var marker = new window.SMap.Marker(coords, false);
-          makrLayer?.addMarker(marker);
-
-          // var suggest = new window.SMap.Suggest(input);
-          // suggest.urlParams({
-          //   // omezeni pro celou CR
-          //   bounds: "48.5370786,12.0921668|51.0746358,18.8927040",
-          // });
-          // suggest.addListener("suggest", function (suggestData: any) {
-          //   alert(suggestData.phrase);
-          // });
-
-          find("Brno", window.SMap);
-          setMap(sMap);
+          const markerCors = window.SMap.Coords.fromWGS84(marker.x, marker.y);
+          var newMarker = new window.SMap.Marker(markerCors, false);
+          makrLayer?.addMarker(newMarker);
+          console.log("marker");
         }
+        setMap(sMap);
       });
       return () => {
         document.body.removeChild(script);
@@ -110,7 +72,7 @@ const Map = (props: MapProps) => {
     script.async = true;
     script.onload = onload;
     document.body.appendChild(script);
-  }, []);
+  }, [props.marker]);
   if (loading) {
     return <div>Loading</div>;
   } else {

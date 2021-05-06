@@ -8,15 +8,16 @@ import { getCategory } from "../api/category";
 import "../App.css";
 import "../styles/Add-post.css";
 import useFindInMap from "../mapa/useFindInMap";
+import Mapa from "../mapa/Map";
 interface Categories {
   name: string;
 }
-
+type mapCoors = {
+  x: number;
+  y: number;
+};
 interface LocationRes {
-  coords: {
-    x: number;
-    y: number;
-  };
+  coords: mapCoors;
   label: string;
   id: number;
 }
@@ -28,6 +29,7 @@ function Add() {
   const [categories, setCategories] = useState<Categories[] | null>(null);
   const [location, setLocation] = useState("");
   const [findResults, setFindResults] = useState<LocationRes[] | null>();
+  const [mapCoors, setMapCoors] = useState<mapCoors | undefined>();
 
   const { setLoactionToFind, result } = useFindInMap();
   useEffect(() => {
@@ -39,10 +41,11 @@ function Add() {
       }
     });
   }, []);
-  const selectLocRes = (coords: { x: number; y: number }, label: string) => {
-    setLocation(label); 
-    setFindResults(null); 
-    //mapa zobrazeni
+  const selectLocRes = (coors: mapCoors, label: string) => {
+    setLocation(label);
+    setFindResults(null);
+    setMapCoors(coors);
+    console.log(coors);
   };
   useEffect(() => {
     if (result) {
@@ -123,7 +126,22 @@ function Add() {
                 : ""}
             </ul>
           </div>
-          <div className="map"></div>
+          <div className="map">
+            {mapCoors ? (
+              <Mapa
+                height="100%"
+                center={{ lat: mapCoors.y, lng: mapCoors.x }}
+                zoom={11}
+                marker={mapCoors}
+              />
+            ) : (
+              <Mapa
+                height="100%"
+                center={{ lat: 50.0755, lng: 14.4378 }}
+                zoom={5}
+              />
+            )}
+          </div>
         </div>
         <p className="font1 link">Add photos</p>
         <p className="font2 mt-1">0 photos uploaded</p>
