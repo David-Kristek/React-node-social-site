@@ -25,6 +25,9 @@ class Validation {
     const schema = Joi.object({
       name: Joi.string().min(6).required(),
       description: Joi.string().min(6).required(),
+      categories: Joi.array(),
+      location: Joi.object(),
+      images:  Joi.object(),
     });
     return schema.validate(data);
   }

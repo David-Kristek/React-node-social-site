@@ -9,6 +9,7 @@ import "../App.css";
 import "../styles/Add-post.css";
 import useFindInMap from "../mapa/useFindInMap";
 import Mapa from "../mapa/Map";
+import { addPosts } from "../api/post";
 interface Categories {
   name: string;
   _id: string;
@@ -73,7 +74,19 @@ function Add() {
   const onFileChange = (e: any) => {
     setImages(e.target.files);
   };
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    const data = new FormData();
+    data.append("name", name);
+    data.append("description", description);
+    // data.append("location", { x: mapCoors.x, y: mapCoors.y }); pak zvlast treba hedrem
+    data.append("images", images);
+    data.append("name", name);
+    addPosts({
+      data,
+    }).then((res) => {
+      console.log(res);
+    });
+  };
   return (
     <main className="add-post-box">
       <h1 className="mb-3">New Post</h1>

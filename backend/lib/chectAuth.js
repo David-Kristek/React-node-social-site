@@ -20,9 +20,11 @@ const checkAuthenticated = async (req, res, next) => {
       });
       if (!ticket) return res.status(200).send("unauthorized2");
       const payload = ticket.getPayload();
+      userF = await User.findOne({email: payload.email});
       user.name = payload.name;
       user.email = payload.email;
       user.picture = payload.picture;
+      user._id =  userF._id; 
       req.user = user;
     } else if (type === "JWT") {
       const verified = jwt.verify(token, process.env.TOKEN_SECRET);
@@ -32,6 +34,7 @@ const checkAuthenticated = async (req, res, next) => {
       return res.status(200).json({ msg: "unauthorized3"});
     }
   } catch (err) {
+    console.log(err);
     return res.status(200).json({ msg: "unauthorized4", err: err });
   }
 
