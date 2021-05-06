@@ -31,8 +31,8 @@ export const isLogged = async (type: string | null) => {
       method: "GET",
       url: "http://localhost:5000/api/auth/is_logged",
       headers: {
-        "auth-token": localStorage.getItem("token"),
-        type: type,
+        "token": localStorage.getItem("token"),
+        "auth-type": type,
       },
     });
     if ((res.data.msg = "success" && res.data.user.email)) {

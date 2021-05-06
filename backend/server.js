@@ -22,3 +22,4 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/category", require("./routes/category")); 
+app.use("/api/posts", require("./routes/posts")); 

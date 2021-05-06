@@ -7,8 +7,8 @@ const CLIENT_ID =
 const client = new OAuth2Client(CLIENT_ID);
 
 const checkAuthenticated = async (req, res, next) => {
-  let token = req.header("auth-token"); // token dame pres header - auth-token
-  let type = req.header("type");
+  let token = req.header("token"); // token dame pres header - auth-token
+  let type = req.header("auth-type");
   if (!token || !type) return res.status(200).send("unauthorized1");
   let user = {};
   var ticket;

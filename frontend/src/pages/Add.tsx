@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
 import { useGlobalContext } from "../context";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { getCategory } from "../api/category";
@@ -11,6 +11,7 @@ import useFindInMap from "../mapa/useFindInMap";
 import Mapa from "../mapa/Map";
 interface Categories {
   name: string;
+  _id: string;
 }
 type mapCoors = {
   x: number;
@@ -24,34 +25,55 @@ interface LocationRes {
 
 function Add() {
   const { setPage, page, setNavigator } = useGlobalContext();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState<Categories[] | null>(null);
   const [location, setLocation] = useState("");
   const [findResults, setFindResults] = useState<LocationRes[] | null>();
   const [mapCoors, setMapCoors] = useState<mapCoors | undefined>();
+  const [images, setImages] = useState<any>();
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const { setLoactionToFind, result } = useFindInMap();
+
   useEffect(() => {
     setPage("home");
     setNavigator("home|add post");
     getCategory().then((res) => {
       if (res) {
         setCategories(res.data);
+        console.log(res.data);
       }
     });
   }, []);
+  useEffect(() => {
+    if (result) {
+      setFindResults(result);
+    }
+  }, [result]);
+  const selectCategory = (id: string, value: boolean) => {
+    if (value) {
+      setSelectedCategories((selectedCategories) => [
+        ...selectedCategories,
+        id,
+      ]);
+    } else {
+      setSelectedCategories((selectedCategories) =>
+        selectedCategories.filter((item) => item !== id)
+      );
+    }
+  };
   const selectLocRes = (coors: mapCoors, label: string) => {
     setLocation(label);
     setFindResults(null);
     setMapCoors(coors);
     console.log(coors);
   };
-  useEffect(() => {
-    if (result) {
-      setFindResults(result);
-    }
-  }, [result]);
+  const onFileChange = (e: any) => {
+    setImages(e.target.files);
+  };
+  const onSubmit = () => {};
   return (
     <main className="add-post-box">
       <h1 className="mb-3">New Post</h1>
@@ -82,7 +104,13 @@ function Add() {
             categories.map((category, index) => (
               <div key={index}>
                 {category.name}
-                <input type="checkbox" className="checkmark" />
+                <input
+                  type="checkbox"
+                  className="checkmark"
+                  onChange={(e) => {
+                    selectCategory(category._id, e.target.checked);
+                  }}
+                />
               </div>
             ))
           ) : (
@@ -143,10 +171,22 @@ function Add() {
             )}
           </div>
         </div>
-        <p className="font1 link">Add photos</p>
+        <p className="font1">Add photos</p>
+
+        <input
+          type="file"
+          name="imgCollection"
+          onChange={onFileChange}
+          multiple
+        />
+
         <p className="font2 mt-1">0 photos uploaded</p>
         <div className="photos"></div>
-        <Button variant="success mt-4 font1" className="upload">
+        <Button
+          variant="success mt-4 font1"
+          className="upload"
+          onClick={onSubmit}
+        >
           Upload post
         </Button>
       </div>
