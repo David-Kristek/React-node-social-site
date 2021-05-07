@@ -35,7 +35,8 @@ var upload = multer({
 class CategoryController {
   async add(req, res) {
     console.log(req.body);
-    // const { error } = validate.post(req.body); //dodelat uploadnuti obrazku
+    console.log(req.files);
+        // const { error } = validate.post(req.body); //dodelat uploadnuti obrazku
     // if (error) return res.status(200).send(error.details[0].message);
 
     // upload.array('iamges', 6); 
@@ -44,8 +45,7 @@ class CategoryController {
     // for (var i = 0; i < req.files.length; i++) {
     //   reqFiles.push(url + "/public/" + req.files[i].filename);
     // }
-    console.log(req.files);
-    return; 
+    return res.send("ahoj"); 
     console.log(req.user);
     const post = new Post({
       name: req.body.name,

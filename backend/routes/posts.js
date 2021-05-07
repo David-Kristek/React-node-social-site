@@ -6,6 +6,6 @@ const post = new PostController();
 
 router.get("/", post.get)
 // router.post("/add",post.add); 
-router.post("/add", checkAuth ,post.add); 
+router.post("/add", post.add); 
 
 module.exports = router;

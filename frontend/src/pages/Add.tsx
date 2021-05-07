@@ -10,6 +10,7 @@ import "../styles/Add-post.css";
 import useFindInMap from "../mapa/useFindInMap";
 import Mapa from "../mapa/Map";
 import { addPosts } from "../api/post";
+import axios from "axios";
 interface Categories {
   name: string;
   _id: string;
@@ -48,9 +49,10 @@ function Add({ setPopup, setShowPopup }: Props) {
     setNavigator("home|add post");
     getCategory().then((res) => {
       if (res) {
-        const filCategory = res.data.filter((item: any) => item.approved === true);
+        const filCategory = res.data.filter(
+          (item: any) => item.approved === true
+        );
         setCategories(filCategory);
-        console.log(filCategory);
       }
     });
   }, []);
@@ -75,23 +77,35 @@ function Add({ setPopup, setShowPopup }: Props) {
     setLocation(label);
     setFindResults(null);
     setMapCoors(coors);
-    console.log(coors);
   };
   const onFileChange = (e: any) => {
     setImages(e.target.files);
   };
   const onSubmit = () => {
-    const data = new FormData();
-    data.append("name", name);
-    data.append("description", description);
+    // formData.append("name", name);
+    // formData.append("description", description);
     // data.append("location", { x: mapCoors.x, y: mapCoors.y }); pak zvlast treba hedrem
-    data.append("images", images);
-    data.append("name", name);
-    addPosts({
-      data,
+    // [...images].forEach((item: any, key: number) => {
+    //   formData.append("images", images[key]);
+    // });
+    // addPosts(data).then((res) => {
+    //   console.log(res);
+    // });
+    const formData = new FormData();
+
+    formData.append("image", images[0]);
+    console.log(formData.get("image"));
+    fetch("http://localhost:5000/api/picture", {
+      method: "POST",
+      body: formData,
     }).then((res) => {
       console.log(res);
-    });
+    }); //chyba je ciste na strane serveru
+    // axios
+    //   .post("http://localhost:5000/api/posts/add", formData, {})
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
   };
   return (
     <main className="add-post-box">
@@ -207,7 +221,7 @@ function Add({ setPopup, setShowPopup }: Props) {
           type="file"
           name="imgCollection"
           onChange={onFileChange}
-          multiple
+          // multiple
         />
 
         <p className="font2 mt-1">0 photos uploaded</p>
