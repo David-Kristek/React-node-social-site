@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
 import { useGlobalContext } from "../context";
-import { Button, Form } from "react-bootstrap";
+import { Button, Spinner, Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { getCategory } from "../api/category";
@@ -9,7 +9,7 @@ import "../App.css";
 import "../styles/Add-post.css";
 import useFindInMap from "../mapa/useFindInMap";
 import Mapa from "../mapa/Map";
-import { addPosts } from "../api/post";
+import { addPost } from "../api/post";
 import axios from "axios";
 interface Categories {
   name: string;
@@ -41,6 +41,9 @@ function Add({ setPopup, setShowPopup }: Props) {
   const [mapCoors, setMapCoors] = useState<mapCoors | undefined>();
   const [images, setImages] = useState<any>();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState("");
 
   const { setLoactionToFind, result } = useFindInMap();
 
@@ -81,8 +84,13 @@ function Add({ setPopup, setShowPopup }: Props) {
   const onFileChange = (e: any) => {
     setImages(e.target.files);
   };
+  const delay = (delay: number) => {
+    return new Promise((res) => setTimeout(res, delay));
+  };
+
   const onSubmit = (e: any) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", description);
@@ -101,21 +109,36 @@ function Add({ setPopup, setShowPopup }: Props) {
         formData.append("images", images[key]);
       });
     }
-    fetch("http://localhost:5000/api/posts/add", {
-      method: "POST",
-      body: formData,
-      headers: {
-        token: localStorage.getItem("token"),
-        "auth-type": localStorage.getItem("auth-type"),
-      },
-    }).then((res) => {
-      console.log(res);
+    addPost(formData).then((res) => {
+      if ("err" in res) {
+        setMsg("");
+        setError(res.err);
+      } else if ("msg" in res) {
+        setError("");
+        setMsg(res.err);
+        //timeuot 5s pak redirect
+      } else {
+        setMsg("");
+        setError("Something went wrong");
+      }
+      setLoading(false);
     });
   };
   return (
     <main className="add-post-box">
       <h1 className="mb-3">New Post</h1>
       <div className="add-post-form">
+        <Alert
+          variant={`${!!error ? "danger" : ""}${!!msg ? "success" : ""} `}
+          onClose={() => {
+            setError("");
+            setMsg("");
+          }}
+          show={!!error || !!msg}
+          dismissible
+        >
+          {`${!!error ? error : ""}${!!msg ? msg : ""}`}
+        </Alert>
         <p className="font1">Name</p>
         <input
           type="text"
@@ -236,7 +259,11 @@ function Add({ setPopup, setShowPopup }: Props) {
           className="upload"
           onClick={onSubmit}
         >
-          Upload post
+          {loading ? (
+            <Spinner animation="border" variant="light" />
+          ) : (
+            "Upload post"
+          )}
         </Button>
       </div>
     </main>

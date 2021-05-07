@@ -13,7 +13,8 @@ const postSchema = new Schema(
       type: String,
     },
     categories: {
-      type: Array,
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Category",
     },
     location: {
       x: Number,
