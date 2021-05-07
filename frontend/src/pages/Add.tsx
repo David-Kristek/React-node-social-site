@@ -90,11 +90,11 @@ function Add({ setPopup, setShowPopup }: Props) {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", description);
-    formData.append("image", images[0]);
+    // formData.append("image", images[0]);
 
-    // [...images].forEach((item: any, key: number) => {
-    //   formData.append("images", images[key]);
-    // });
+    [...images].forEach((item: any, key: number) => {
+      formData.append("images", images[key]);
+    });
 
     fetch("http://localhost:5000/api/posts/add", {
       method: "POST",
@@ -222,7 +222,7 @@ function Add({ setPopup, setShowPopup }: Props) {
           type="file"
           name="imgCollection"
           onChange={onFileChange}
-          // multiple
+          multiple
         />
 
         <p className="font2 mt-1">0 photos uploaded</p>
