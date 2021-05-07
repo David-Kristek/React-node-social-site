@@ -19,11 +19,11 @@ const post = new PostController();
 
 router.get("/", post.get);
 // router.post("/add",post.add);
-router.post("/add", upload.array("images", 5), (req, res, next) => {
+router.post("/add", checkAuth, upload.array("images", 5), (req, res, next) => {
   const files = req.files; 
   if (!files) {
     const error = new Error("Please upload a files");
-    error.httpStatusCode = 400;
+    console.log(error);
     return res.send(error);
   }
   req.body.images = files; 

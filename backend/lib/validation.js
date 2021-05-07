@@ -26,8 +26,8 @@ class Validation {
       name: Joi.string().min(6).required(),
       description: Joi.string().min(6).required(),
       categories: Joi.array(),
-      location: Joi.object(),
-      images:  Joi.object(),
+      location: Joi.array(),
+      images:  Joi.array(),
     });
     return schema.validate(data);
   }

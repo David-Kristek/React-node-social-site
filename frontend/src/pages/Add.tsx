@@ -81,32 +81,36 @@ function Add({ setPopup, setShowPopup }: Props) {
   const onFileChange = (e: any) => {
     setImages(e.target.files);
   };
-  const onSubmit = () => {
-    // data.append("location", { x: mapCoors.x, y: mapCoors.y }); pak zvlast treba hedrem
-
-    // addPosts(data).then((res) => {
-    //   console.log(res);
-    // });
+  const onSubmit = (e: any) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", description);
-    // formData.append("image", images[0]);
-
-    [...images].forEach((item: any, key: number) => {
-      formData.append("images", images[key]);
-    });
-
+    if (mapCoors) {
+      formData.append("location", mapCoors.x.toString());
+      formData.append("location", mapCoors.y.toString());
+    }
+    if (selectedCategories.length > 0) {
+      [...selectedCategories].forEach((item: any, key: number) => {
+        formData.append("categories", selectedCategories[key]);
+      });
+    }
+    if (images) {
+      [...images].forEach((item: any, key: number) => {
+        //DODELAT MOZNA
+        formData.append("images", images[key]);
+      });
+    }
     fetch("http://localhost:5000/api/posts/add", {
       method: "POST",
       body: formData,
+      headers: {
+        token: localStorage.getItem("token"),
+        "auth-type": localStorage.getItem("auth-type"),
+      },
     }).then((res) => {
       console.log(res);
-    }); //chyba je ciste na strane serveru
-    // axios
-    //   .post("http://localhost:5000/api/posts/add", formData, {})
-    //   .then((res) => {
-    //     console.log(res);
-    //   });
+    });
   };
   return (
     <main className="add-post-box">

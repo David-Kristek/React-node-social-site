@@ -20,7 +20,7 @@ const postSchema = new Schema(
       y: Number,
     },
     images: {
-      type: Object,
+      type: Array,
     },
     createdByUser: {
       type: mongoose.Schema.Types.ObjectId,
