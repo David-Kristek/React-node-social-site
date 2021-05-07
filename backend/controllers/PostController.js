@@ -34,10 +34,12 @@ var upload = multer({
 
 class CategoryController {
   async add(req, res) {
-    //req.body.file.destination + req.body.file.filename
-    console.log(req.body); 
-        // const { error } = validate.post(req.body);
-    // if (error) return res.status(200).send(error.details[0].message);
+    //req.body.files.destination + req.body.files.filename
+    // console.log(req.body);
+    req.body.images = req.body.images.map((file) => file.filename); //to array
+    console.log(req.body.images);
+    const { error } = validate.post(req.body);
+    if (error) return res.status(200).send(error.details[0].message);
 
     return res.send("ahoj");
     const post = new Post({
