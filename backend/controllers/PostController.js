@@ -34,19 +34,12 @@ var upload = multer({
 
 class CategoryController {
   async add(req, res) {
-    console.log(req.body);
-    console.log(req.files);
-        // const { error } = validate.post(req.body); //dodelat uploadnuti obrazku
+    //req.body.file.destination + req.body.file.filename
+    console.log(req.body); 
+        // const { error } = validate.post(req.body);
     // if (error) return res.status(200).send(error.details[0].message);
 
-    // upload.array('iamges', 6); 
-    // const reqFiles = [];
-    // const url = req.protocol + "://" + req.get("host");
-    // for (var i = 0; i < req.files.length; i++) {
-    //   reqFiles.push(url + "/public/" + req.files[i].filename);
-    // }
-    return res.send("ahoj"); 
-    console.log(req.user);
+    return res.send("ahoj");
     const post = new Post({
       name: req.body.name,
       description: req.body.description,

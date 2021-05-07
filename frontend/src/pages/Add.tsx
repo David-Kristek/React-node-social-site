@@ -82,20 +82,21 @@ function Add({ setPopup, setShowPopup }: Props) {
     setImages(e.target.files);
   };
   const onSubmit = () => {
-    // formData.append("name", name);
-    // formData.append("description", description);
     // data.append("location", { x: mapCoors.x, y: mapCoors.y }); pak zvlast treba hedrem
-    // [...images].forEach((item: any, key: number) => {
-    //   formData.append("images", images[key]);
-    // });
+
     // addPosts(data).then((res) => {
     //   console.log(res);
     // });
     const formData = new FormData();
-
+    formData.append("name", name);
+    formData.append("description", description);
     formData.append("image", images[0]);
-    console.log(formData.get("image"));
-    fetch("http://localhost:5000/api/picture", {
+
+    // [...images].forEach((item: any, key: number) => {
+    //   formData.append("images", images[key]);
+    // });
+
+    fetch("http://localhost:5000/api/posts/add", {
       method: "POST",
       body: formData,
     }).then((res) => {
