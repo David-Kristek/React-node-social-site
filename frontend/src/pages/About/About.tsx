@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useGlobalContext } from "../context";
+import { useGlobalContext } from "../../context";
 function About() {
   const { setPage } = useGlobalContext();
 

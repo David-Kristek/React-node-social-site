@@ -9,7 +9,7 @@ const client = new OAuth2Client(CLIENT_ID);
 const checkAuthenticated = async (req, res, next) => {
   let token = req.header("token"); // token dame pres header - auth-token
   let type = req.header("auth-type");
-  if (!token || !type) return res.status(200).send("unauthorized1");
+  if (!token || !type) return res.status(200).json({ err: "unauthorized1" });
   let user = {};
   var ticket;
   try {
@@ -18,27 +18,26 @@ const checkAuthenticated = async (req, res, next) => {
         idToken: token,
         audience: CLIENT_ID,
       });
-      if (!ticket) return res.status(200).send("unauthorized2");
+      if (!ticket) return res.status(200).json({ err: "unauthorized2" });
       const payload = ticket.getPayload();
-      userF = await User.findOne({email: payload.email});
+      userF = await User.findOne({ email: payload.email });
       user.name = payload.name;
       user.email = payload.email;
       user.picture = payload.picture;
-      user._id =  userF._id; 
+      user._id = userF._id;
       req.user = user;
     } else if (type === "JWT") {
       const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-      req.user = await User.findOne({_id: verified._id});
-    }
-    else{
-      return res.status(200).json({ msg: "unauthorized3"});
+      req.user = await User.findOne({ _id: verified._id });
+    } else {
+      return res.status(200).json({ err: "unauthorized3" });
     }
   } catch (err) {
     console.log(err);
-    return res.status(200).json({ msg: "unauthorized4", err: err });
+    return res.status(200).json({ err: "unauthorized4", err: err });
   }
 
   next();
 };
 
-module.exports = checkAuthenticated; 
+module.exports = checkAuthenticated;
