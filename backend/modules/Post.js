@@ -1,4 +1,4 @@
-const { object } = require("@hapi/joi");
+const { object, string } = require("@hapi/joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -19,12 +19,17 @@ const postSchema = new Schema(
     location: {
       x: Number,
       y: Number,
+      label: String,
     },
     images: {
       type: Array,
     },
     createdByUser: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    likedByUsers: {
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
     },
   },

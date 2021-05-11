@@ -4,14 +4,10 @@ import { useGlobalContext } from "../../context";
 import { getCategory } from "../../api/category";
 import { addPost } from "../../api/post";
 
-interface Categories {
-  name: string;
-  _id: string;
-  approved: boolean;
-}
+
 
 function AddLogic() {
-  const [categories, setCategories] = useState<Categories[] | null>();
+  const [categories, setCategories] = useState<Category[] | null>();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -55,7 +51,9 @@ function AddLogic() {
     if (mapCoors) {
       formData.append("location", mapCoors.x.toString());
       formData.append("location", mapCoors.y.toString());
+      formData.append("place", data.location);
     }
+
     if (selectedCategories.length > 0) {
       [...selectedCategories].forEach((item: any, key: number) => {
         formData.append("categories", selectedCategories[key]);

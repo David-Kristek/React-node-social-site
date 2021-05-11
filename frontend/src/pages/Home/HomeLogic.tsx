@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useGlobalContext } from "../../context";
+import { getPosts } from "../../api/post";
+
+
 
 function HomeLogic() {
   const { setPage, page, setNavigator } = useGlobalContext();
-
-  const [loading, setLoading] = useState(false)
+  const [posts, setPosts] = useState<Post[]>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setPage("home");
     setNavigator("home|");
-    console.log("ahoj");
+    getPosts().then(res => {
+      if(!res) return; 
+      setPosts(res.data)
+    })
+    setLoading(false)
   }, []);
 
-  return { loading };
+  return { loading, posts };
 }
 
 export default HomeLogic;

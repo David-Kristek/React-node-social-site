@@ -4,10 +4,7 @@ import styled from "styled-components";
 
 export const MapContext = createContext(null);
 
-type mapCoors = {
-  x: number;
-  y: number;
-};
+
 
 interface MapProps {
   center: { lat: number; lng: number };

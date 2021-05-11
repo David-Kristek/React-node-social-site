@@ -11,10 +11,6 @@ import useFindInMap from "../../mapa/useFindInMap";
 import Mapa from "../../mapa/Map";
 import AddLogic from "./AddLogic";
 
-type mapCoors = {
-  x: number;
-  y: number;
-};
 interface LocationRes {
   coords: mapCoors;
   label: string;
@@ -44,12 +40,6 @@ function Add({ setPopup, setShowPopup }: Props) {
   const watchLocation = watch("location");
 
   var mapResult : LocationRes[] | null = useMemo(() => result, [result]); 
-  
-  // useEffect(() => {
-  //   if (result) {
-  //     setFindResults(result);
-  //   }
-  // }, [result]);
 
   useEffect(() => {
     if (watchLocation) setLoactionToFind(watchLocation);
@@ -57,7 +47,6 @@ function Add({ setPopup, setShowPopup }: Props) {
 
   const selectLocRes = (coors: mapCoors, label: string) => {
     setValue("location", label);
-    // setFindResults(null);
     mapResult = null; 
     setMapCoors(coors);
   };

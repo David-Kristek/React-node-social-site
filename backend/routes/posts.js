@@ -40,19 +40,7 @@ router.post(
   "/add",
   checkAuth,
   upload.array("images", 5),
-  (req, res, next) => {
-    const { error } = validate.post(req.body);
-    if (error) {
-      console.log(error);
-      return res.status(200).json({ err: error.details[0].message });
-    }
-    const files = req.files;
-    if (!files) {
-      req.body.images = false;
-    }
-    req.body.images = files;
-    next();
-  },
+  post.upload_image,
   post.add
 );
 

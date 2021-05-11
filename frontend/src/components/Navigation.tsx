@@ -38,12 +38,12 @@ function Navigator() {
           );
         }
         return (
-          <>
+          <span key={a} >
             <Link key={a} to={href} className="link font2">
               {item}
             </Link>{" "}
             {" >"}
-          </>
+          </span>
         );
       });
       setContent(load);

@@ -4,17 +4,18 @@ const multer = require("multer");
 const Validation = require("../lib/validation");
 
 const validate = new Validation();
-
 class CategoryController {
   async add(req, res) {
     console.log("post");
-    if(req.body.images) req.body.images = req.body.images.map((file) => file.filename); //to array
-    var locationCoors; 
-    if(req.body.location){
+    if (req.body.images)
+      req.body.images = req.body.images.map((file) => file.filename); //to array
+    var locationCoors;
+    if (req.body.location) {
       locationCoors = {
         x: parseFloat(req.body.location[0]),
         y: parseFloat(req.body.location[1]),
-      }
+        label: req.body.place,
+      };
     }
     const post = new Post({
       name: req.body.name,
@@ -35,8 +36,28 @@ class CategoryController {
     }
   }
   async get(req, res) {
-    const posts = await Post.find();
+    const posts = await Post.find()
+      .populate({
+        path: "categories",
+        select: ["name"],
+      })
+      .populate("createdByUser");
     return res.send(posts);
+  }
+  upload_image(req, res, next) {
+    if (!req.user) return;
+    console.log(req.body);
+    const { error } = validate.post(req.body);
+    if (error) {
+      console.log(error);
+      return res.status(200).json({ err: error.details[0].message });
+    }
+    const files = req.files;
+    if (!files) {
+      req.body.images = false;
+    }
+    req.body.images = files;
+    next();
   }
 }
 module.exports = CategoryController;
