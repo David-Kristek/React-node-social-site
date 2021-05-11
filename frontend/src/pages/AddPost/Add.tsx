@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import ReactLoading from "react-loading";
 import { Button, Spinner, Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,11 +43,13 @@ function Add({ setPopup, setShowPopup }: Props) {
   const { register, handleSubmit, getValues, setValue, watch } = useForm();
   const watchLocation = watch("location");
 
-  useEffect(() => {
-    if (result) {
-      setFindResults(result);
-    }
-  }, [result]);
+  var mapResult : LocationRes[] | null = useMemo(() => result, [result]); 
+  
+  // useEffect(() => {
+  //   if (result) {
+  //     setFindResults(result);
+  //   }
+  // }, [result]);
 
   useEffect(() => {
     if (watchLocation) setLoactionToFind(watchLocation);
@@ -55,7 +57,8 @@ function Add({ setPopup, setShowPopup }: Props) {
 
   const selectLocRes = (coors: mapCoors, label: string) => {
     setValue("location", label);
-    setFindResults(null);
+    // setFindResults(null);
+    mapResult = null; 
     setMapCoors(coors);
   };
   const onFileChange = (e: any) => {
@@ -107,7 +110,7 @@ function Add({ setPopup, setShowPopup }: Props) {
           <div className="category-box">
             {categories ? (
               categories.map((category, index) => (
-                <div key={index}>
+                <div key={index} className="category">
                   {category.name}
                   <input
                     type="checkbox"
@@ -124,7 +127,7 @@ function Add({ setPopup, setShowPopup }: Props) {
                 height={50}
                 width={375}
                 color="white"
-                className="loading-cat"
+                className="category loading-cat"
               />
             )}
           </div>
@@ -141,8 +144,8 @@ function Add({ setPopup, setShowPopup }: Props) {
                 <FontAwesomeIcon icon={faCheck} size="2x" />
               </Button>
               <ul className="help font2">
-                {findResults && getValues("location") !== ""
-                  ? findResults.slice(0, 3).map((item, index) => (
+                {mapResult && getValues("location") !== ""
+                  ? mapResult.slice(0, 3).map((item, index) => (
                       <li
                         key={index}
                         onClick={() => {

@@ -36,16 +36,6 @@ main div {
   justify-content: space-around;
   margin-top: 15px;
 }
-.category-box div {
-  background: #bed7d5;
-  display: grid;
-  grid-template-columns: auto auto;
-  column-gap: 10px;
-  padding: 5px 13px;
-  font-size: 20px;
-  align-items: center;
-  border-radius: 5px;
-}
 .category-box .loading-cat{
   background-color: unset !important;
 }

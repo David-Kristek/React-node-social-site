@@ -19,6 +19,7 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);

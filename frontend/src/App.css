@@ -7,6 +7,7 @@
 .font3 {
   font-size: 18px;
 }
+
 .center {
   display: flex;
   justify-content: center;
@@ -14,15 +15,15 @@
 .point {
   cursor: pointer;
 }
-.link{
-  color: #2360D8 !important;
+.link {
+  color: #2360d8 !important;
   text-decoration-line: underline !important;
   cursor: pointer;
 }
 
 .submit {
   width: 80px;
-} 
+}
 .checkmark {
   height: 25px;
   width: 25px;
@@ -62,16 +63,54 @@
   transition: border 0.3s ease;
   transition: box-shadow 0.3s ease;
 }
-.input:focus{
+.input:focus {
   outline: none;
-  box-shadow: 6px 6px 2px #5E9ABB;
-  border: 3px solid #5E9ABB;
+  box-shadow: 6px 6px 2px #5e9abb;
+  border: 3px solid #5e9abb;
 }
-.fl-between{
+.fl-between {
   display: flex;
   justify-content: space-between;
 }
-.navigator{
+.navigator {
   position: absolute;
   left: 4vw;
+}
+.category {
+  background: #bed7d5;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  padding: 5px 13px;
+  font-size: 20px;
+  align-items: center;
+  border-radius: 5px;
+}
+.heart {
+  color: crimson;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+.comment {
+  transition: transform 0.2s ease-in-out;
+  color: rgb(20, 177, 220);
+  cursor: pointer;
+}
+.comment-unactive{
+  color: white;
+}
+.comment path {
+  stroke: rgb(20, 177, 220);
+  stroke-width: 50;
+}
+.heart:hover,
+.comment:hover {
+  transform: scale(1.17);
+}
+.heart-unactive {
+  color: white;
+}
+.heart-unactive path {
+  stroke: crimson;
+  stroke-width: 50;
 }

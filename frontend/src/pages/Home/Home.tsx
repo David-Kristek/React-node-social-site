@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react'
-import { useGlobalContext } from '../../context';
+import React, { useEffect } from "react";
+
+import { useGlobalContext } from "../../context";
+import HomeLogic from "./HomeLogic";
+import Post from "./Post"; 
+import "../../styles/Home.css"; 
+
 function Homie() {
-    const { setPage } = useGlobalContext();
+  const { setPage } = useGlobalContext();
+  const { loading } = HomeLogic();
 
-    useEffect(() => {
-        setPage("home");
-    }, []);
-
-    return (
-        <div><h1>Homie</h1></div>
-    )
+  return (
+    <main className="home">
+      <Post />
+    </main>
+  );
 }
 
-export default Homie
+export default Homie;

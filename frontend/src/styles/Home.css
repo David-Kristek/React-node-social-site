@@ -1,0 +1,57 @@
+.post {
+  background: #ededed;
+  width: 700px;
+  margin: auto;
+  padding: 20px 20px;
+  position: relative;
+}
+.post .center {
+  position: relative;
+}
+.post img {
+  max-width: 100%;
+  max-height: 380px;
+  min-height: 250px;
+  /* musi byt vycentrovan pokud neni tak siroky */
+}
+.post .top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  padding-bottom: 10px;
+}
+.post .arrow {
+  top: 36%;
+  color: rgb(200, 200, 206);
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.post .arrow:hover{
+  color: rgb(83, 83, 85);
+}
+.leftArrow {
+  left: -20px;
+}
+.rightArrow {
+  right: -20px;
+}
+.bottom{
+  margin: 15px 0 0; 
+  padding-right: 3%;
+  display: flex;
+  justify-content: space-between;
+}
+.bottom span{
+  padding: 0 3px 0 5px; 
+}
+.htop{
+  margin: 0 0 10px;
+}
+.htop div{
+  font-size: 16px;
+}
+.htop *{
+  margin-right: 10px;
+  display: inline;
+}

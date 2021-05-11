@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useState, useRef } from "react";
 import { Modal, Button } from "react-bootstrap";
 
 import Login from "../components/auth/Login";
@@ -20,13 +20,16 @@ function AppContainer({
   setShowPopup,
 }: Props) {
   const [nowLogin, setNowLogin] = useState(false);
+  const loginPopup = useRef<React.MutableRefObject<null>>(null);
   const close = () => {
+    // if(loginPopup.current) loginPopup.current.onHide = false; 
     setShowPopup(false);
   };
+  //useRef !!!
   if (popup) {
     return (
       <>
-        <Modal show={showPopup} onHide={(close)}>
+        <Modal show={showPopup} onHide={close} ref={loginPopup}>
           {popup === "login" && (
             <Login
               close={close}
@@ -43,22 +46,14 @@ function AppContainer({
             />
           )}
           {popup === "addCategory" && (
-            <AddCategory
-              close={close}
-              setPopup={setPopup}
-            />
+            <AddCategory close={close} setPopup={setPopup} />
           )}
         </Modal>
         {children}
       </>
     );
   } else {
-    return (
-      <>
-        {" "}
-        {children}
-      </>
-    );
+    return <> {children}</>;
   }
 }
 

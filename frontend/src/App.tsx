@@ -12,7 +12,6 @@ import Navigator from "./components/Navigation";
 import Home from "./pages/Home/Home";
 import Add from "./pages/AddPost/Add";
 import About from "./pages/About/About";
-import Map from "./mapa/Map"; 
 function App() {
   const [popup, setPopup] = useState<String | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false);
