@@ -2,14 +2,14 @@ import React, { useState, useContext, useEffect, ReactNode } from "react";
 import { useHistory } from "react-router-dom";
 import { isLogged } from "./api/auth";
 
-
 interface AppContext {
   page: String;
   setPage: (str: string) => void;
   user: User;
   setUser: (pr: User) => void;
-  navigator: string, 
+  navigator: string;
   setNavigator: (pr: string) => void;
+  logout: () => void;
 
 }
 
@@ -29,14 +29,27 @@ interface User {
 const AppProvider = ({ children }: Props) => {
   // const [popUp, setPopup] = useState<string>("");
   const [page, setPage] = useState<string>("");
-  const [navigator, setNavigator] = useState<string>(""); //dodelat!!!!!
+  const [navigator, setNavigator] = useState<string>("");
   const [user, setUser] = useState<User>({
     logged: false,
     name: "",
     email: "",
     picture: "",
   });
-  useEffect(() => {
+  const logout = () => {
+    if (user.logged) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("auth-type");
+      setUser({
+        logged: false,
+        name: "",
+        email: "",
+        picture: "",
+      });
+    }
+  };
+  const isUserLogged = () => {
+    console.log("agih");
     const AuthType = localStorage.getItem("auth-type");
     if (AuthType) {
       isLogged(AuthType).then((res) => {
@@ -50,11 +63,15 @@ const AppProvider = ({ children }: Props) => {
         }
       });
     }
+  };
+
+  useEffect(() => {
+    isUserLogged();
   }, []);
 
   return (
     <AppContext.Provider
-      value={{ page, setPage, user, setUser, navigator, setNavigator }}
+      value={{ page, setPage, user, setUser, navigator, setNavigator, logout }}
     >
       {children}
     </AppContext.Provider>

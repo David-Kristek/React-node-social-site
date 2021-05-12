@@ -55,6 +55,7 @@ class AuthController {
         name: user.name,
         email: user.email,
         picture: user.image,
+        _id: user._id, 
       },
     });
     // return res.send("Logged in");

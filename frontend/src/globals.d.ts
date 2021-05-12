@@ -5,6 +5,7 @@ declare global {
     approved: boolean;
   }
   interface Post {
+    _id: string;
     location: {
       x: number;
       y: number;
@@ -16,9 +17,9 @@ declare global {
     description: string;
     createdByUser: User;
     createdAt: Date;
-    likedByUsers: User[];
+    likedByUsers: otherUser[];
   }
-  type User = {
+  type otherUser = {
     name: string;
     email: string;
     image: string;

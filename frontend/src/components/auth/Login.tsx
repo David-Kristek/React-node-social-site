@@ -19,7 +19,7 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
@@ -31,7 +31,7 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
           email: res.user.email,
           picture: res.user.picture,
         });
-        localStorage.setItem("auth-type", "jwt"); 
+        localStorage.setItem("auth-type", "jwt");
         setError(null);
         setPopup("");
       } else {
@@ -43,7 +43,7 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
   const responseSuccessGoogle = (response: any) => {
     googleLogin(response).then((res) => {
       if (res.msg === "failed") {
-        setError(res.error); 
+        setError(res.error);
       } else {
         setUser({
           logged: true,
@@ -51,7 +51,7 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
           email: res?.user.email,
           picture: res?.user.picture,
         });
-        setPopup(""); 
+        setPopup("");
       }
     });
   };

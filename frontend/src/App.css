@@ -114,3 +114,8 @@
   stroke: crimson;
   stroke-width: 50;
 }
+.profile-pic {
+  border-radius: 50%;
+  max-width: 30px;
+  max-height: 30px;
+}

@@ -11,25 +11,13 @@ interface Props {
 }
 
 function Nav({ setPopup, setShowPopup }: Props) {
-  const { page, setPage, user, setUser } = useGlobalContext();
+  const { page, setPage, user, setUser, logout } = useGlobalContext();
   const [underline, setUnderline] = useState(page);
   const [once, setOnce] = useState(true);
   const login = () => {
     setPopup("login");
     setShowPopup(true);
     // setPage("log")
-  };
-  const logout = () => {
-    if(user.logged){
-      localStorage.removeItem("token"); 
-      localStorage.removeItem("auth-type"); 
-      setUser({
-        logged: false,
-        name: "",
-        email: "",
-        picture: "",
-      });
-    }
   };
   if (page !== "" && once) {
     const pageI = page;

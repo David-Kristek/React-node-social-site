@@ -44,4 +44,6 @@ router.post(
   post.add
 );
 
+router.get("/like/:id", checkAuth,post.like_post); 
+
 module.exports = router;

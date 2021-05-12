@@ -5,14 +5,16 @@ import { faFileExport, faUser } from "@fortawesome/free-solid-svg-icons";
 //logic
 const userStyles = {
   display: "flex",
+  "align-items": "center", 
 };
-
-function User() {
+interface Props {
+  user: otherUser; 
+}
+function User({user} : Props) {
   return (
     <div style={userStyles}>
-      {/* podminka pokud je tu obrazek */}
-      <FontAwesomeIcon icon={faUser} size="lg" />
-      <p className="pl-2">David Křístek</p>
+      {user.image ? (<img src={user.image} className="profile-pic"/>) : (<FontAwesomeIcon icon={faUser} size="lg" />)}
+      <p className="pl-2">{user.name}</p>
     </div>
   );
 }

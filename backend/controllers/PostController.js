@@ -6,7 +6,6 @@ const Validation = require("../lib/validation");
 const validate = new Validation();
 class CategoryController {
   async add(req, res) {
-    console.log("post");
     if (req.body.images)
       req.body.images = req.body.images.map((file) => file.filename); //to array
     var locationCoors;
@@ -26,7 +25,6 @@ class CategoryController {
       images: req.body.images,
       createdByUser: req.user._id,
     });
-    console.log(post);
     try {
       const save = await post.save();
       return res.json({ msg: "Post added" });
@@ -41,12 +39,15 @@ class CategoryController {
         path: "categories",
         select: ["name"],
       })
-      .populate("createdByUser");
+      .populate("createdByUser")
+      .populate({
+        path: "likedByUsers",
+        select: ["email"],
+      });
     return res.send(posts);
   }
   upload_image(req, res, next) {
     if (!req.user) return;
-    console.log(req.body);
     const { error } = validate.post(req.body);
     if (error) {
       console.log(error);
@@ -58,6 +59,36 @@ class CategoryController {
     }
     req.body.images = files;
     next();
+  }
+  async like_post(req, res) {
+    const postId = req.params.id;
+    const post = await Post.findById(postId);
+    if (!post) return res.json({ err: true });
+    if (post.likedByUsers.length > 0) {
+      if (post.likedByUsers.includes(req.user._id)) {
+        try {
+          await Post.updateOne(
+            { _id: postId },
+            { $pull: { likedByUsers: req.user._id } }
+          );
+          return res.json({ msg: "unlike" });
+        } catch (err) {
+          console.log(err);
+          return res.json({ err: true });
+        }
+      }
+    }
+    try {
+      await Post.updateOne(
+        { _id: postId },
+        { $push: { likedByUsers: req.user._id } }
+      );
+    } catch (err) {
+      console.log(err);
+      return res.json({ err: true });
+    }
+
+    return res.json({ msg: "like" });
   }
 }
 module.exports = CategoryController;

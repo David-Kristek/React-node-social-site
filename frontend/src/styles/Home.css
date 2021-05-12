@@ -9,7 +9,7 @@
 .post .center {
   position: relative;
 }
-.post img {
+.post .center img {
   max-width: 100%;
   max-height: 380px;
   min-height: 250px;

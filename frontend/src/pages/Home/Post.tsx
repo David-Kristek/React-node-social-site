@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronRight,
@@ -9,18 +9,24 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../../styles/Home.css";
 import User from "../../components/User";
-import { isTemplateExpression } from "typescript";
+import HomeLogic from "./HomeLogic";
+import { useGlobalContext } from "../../context";
+import PostLogic from "./PostLogic";
 
 interface Props {
   postInfo: Post;
 }
 
 function Post({ postInfo }: Props) {
-  console.log(postInfo);
+  HomeLogic();
+  const { liked, likeCount, like } = PostLogic({ postInfo });
+  const { user } = useGlobalContext();
+
+  // nutne dodelat loading
   return (
     <div className="post">
       <div className="top">
-        <User />
+        <User user={postInfo.createdByUser} />
         <div className="right">
           <span className="pr-3">{postInfo.createdAt}</span>
           <FontAwesomeIcon icon={faMapMarkedAlt} size="lg" />
@@ -32,7 +38,13 @@ function Post({ postInfo }: Props) {
         </div>
       </div>
       <div className="center">
-        <img src={process.env.PUBLIC_URL + "/images/image 15.png"} />
+        {postInfo.images.length > 0 ? (
+          <img
+            src={process.env.PUBLIC_URL + "/uploads/" + postInfo.images[0]}
+          />
+        ) : (
+          ""
+        )}
         <FontAwesomeIcon
           icon={faChevronLeft}
           size="5x"
@@ -58,11 +70,12 @@ function Post({ postInfo }: Props) {
           <p className="font3">{postInfo.description}</p>
         </div>
         <div className="right">
-          <span className="font2">{"likedByUsers" in postInfo ? postInfo.likedByUsers : 0}</span>
+          <span className="font2">{likeCount}</span>
           <FontAwesomeIcon
             icon={faHeart}
             size="2x"
-            className="heart heart-unactive"
+            className={liked ? "heart" : "heart heart-unactive"}
+            onClick={like}
           />
           <span className="font2">0</span>
           <FontAwesomeIcon
