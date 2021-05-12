@@ -7,7 +7,7 @@ import "../../styles/Home.css";
 
 function Homie() {
   const { setPage } = useGlobalContext();
-  const { loading, posts } = HomeLogic();
+  const { loading, posts } = HomeLogic(0);
 
   return (
     <main className="home">

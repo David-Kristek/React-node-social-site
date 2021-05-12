@@ -119,3 +119,9 @@
   max-width: 30px;
   max-height: 30px;
 }
+.display{
+  display: block;
+}
+.display-0{
+  display: none;
+}

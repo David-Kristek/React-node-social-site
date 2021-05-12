@@ -18,7 +18,9 @@ interface Props {
 }
 
 function Post({ postInfo }: Props) {
-  HomeLogic();
+  const { imgIndex, toRight, toLeft, rightArrow, leftArrow } = HomeLogic(
+    postInfo.images.length
+  );
   const { liked, likeCount, like } = PostLogic({ postInfo });
   const { user } = useGlobalContext();
 
@@ -38,24 +40,43 @@ function Post({ postInfo }: Props) {
         </div>
       </div>
       <div className="center">
-        {postInfo.images.length > 0 ? (
-          <img
-            src={process.env.PUBLIC_URL + "/uploads/" + postInfo.images[0]}
-          />
-        ) : (
-          ""
-        )}
-        <FontAwesomeIcon
-          icon={faChevronLeft}
-          size="5x"
-          className="arrow leftArrow"
-        />
-        <FontAwesomeIcon
-          icon={faChevronRight}
-          size="5x"
-          className="arrow rightArrow"
-        />
+        {postInfo.images.length > 1
+          ? postInfo.images.map((image, index) => {
+              var position = "";
+              if (index === imgIndex) position = "active";
+              if (index === imgIndex + 1) position = "right";
+              if (index === imgIndex - 1) position = "left";
+              return (
+                <img
+                  key={index}
+                  src={process.env.PUBLIC_URL + "/uploads/" + image}
+                  className={position}
+                />
+              );
+            })
+          : postInfo.images.length > 0 && (
+              <img
+                src={process.env.PUBLIC_URL + "/uploads/" + postInfo.images[0]}
+                className="active"
+              />
+            )}
       </div>
+      {postInfo.images.length > 1 && (
+        <>
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            size="5x"
+            className={`arrow leftArrow ${leftArrow}`}
+            onClick={toLeft}
+          />
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            size="5x"
+            className={`arrow rightArrow ${rightArrow}`}
+            onClick={toRight}
+          />
+        </>
+      )}
       <div className="bottom">
         <div className="left">
           <div className="htop">
