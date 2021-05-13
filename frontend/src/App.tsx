@@ -35,7 +35,7 @@ function App() {
             <Add setPopup={setPopup} setShowPopup={setShowPopup} />
             {/* protected */}
           </Route>
-          <Route exact path="/chats">
+          <Route exact path="/about">
             <About />
             {/* protected */}
           </Route>

@@ -41,7 +41,6 @@ class CategoryController {
   }
   async get(req, res) {
     const posts = await Post.find()
-      .sort({ createdAt: -1 })
       .populate({
         path: "categories",
         select: ["name"],
@@ -50,8 +49,7 @@ class CategoryController {
       .populate({
         path: "likedByUsers",
         select: ["email"],
-      })
-      .populate("comments.commentedByUser");
+      });
     return res.send(posts);
   }
   upload_image(req, res, next) {
@@ -98,23 +96,6 @@ class CategoryController {
     }
 
     return res.json({ msg: "like" });
-  }
-  async comment_post(req, res) {
-    const text = req.body.text;
-    if (!text) return res.json({ err: "true1" });
-    const postId = req.params.id;
-    const post = await Post.findById(postId);
-    if (!post) return res.json({ err: "true2" });
-    try {
-      await Post.updateOne(
-        { _id: postId },
-        { $push: { comments: { commentedByUser: req.user._id, text: text } } }
-      );
-    } catch (err) {
-      console.log(err);
-      return res.json({ err: "true3" });
-    }
-    return res.json({ msg: "commented" });
   }
 }
 module.exports = CategoryController;

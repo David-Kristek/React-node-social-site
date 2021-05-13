@@ -46,6 +46,4 @@ router.post(
 
 router.get("/like/:id", checkAuth,post.like_post); 
 
-router.post("/comment/:id", checkAuth,post.comment_post); 
-
 module.exports = router;

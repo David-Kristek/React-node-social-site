@@ -16,8 +16,8 @@ function AddLogic() {
   const { setPage, page, setNavigator } = useGlobalContext();
 
   useEffect(() => {
-    setPage("posts");
-    setNavigator("posts|add post");
+    setPage("home");
+    setNavigator("home|add post");
 
     getCategory().then((res) => {
       if (res) {

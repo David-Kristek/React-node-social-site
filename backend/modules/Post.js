@@ -24,15 +24,6 @@ const postSchema = new Schema(
     images: {
       type: Array,
     },
-    comments: [
-      {
-          text: String,
-        commentedByUser: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
-      },
-    ],
     createdByUser: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
