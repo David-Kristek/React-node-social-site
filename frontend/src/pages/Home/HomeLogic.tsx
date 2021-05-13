@@ -15,12 +15,17 @@ function HomeLogic(imgCount: number) {
   useEffect(() => {
     setPage("home");
     setNavigator("home|");
+    fetchPost();
+  }, []);
+
+  const fetchPost = () => {
     getPosts().then((res) => {
+      console.log("fetched");
       if (!res) return;
       setPosts(res.data);
       setLoading(false);
     });
-  }, []);
+  };
   const toRight = () => {
     setImgIndex((index) => index + 1);
     if (imgIndex + 2 === imgCount) setRightArrow("display-0");

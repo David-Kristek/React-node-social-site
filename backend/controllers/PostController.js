@@ -2,6 +2,7 @@ const User = require("../modules/User");
 const Post = require("../modules/Post");
 const multer = require("multer");
 const Validation = require("../lib/validation");
+const { array } = require("@hapi/joi");
 
 const validate = new Validation();
 class CategoryController {
@@ -16,11 +17,16 @@ class CategoryController {
         label: req.body.place,
       };
     }
+    console.log(typeof req.body.categories);
+    var categoriesArr = req.body.categories;
+    if (typeof req.body.categories === "string")
+      categoriesArr = [categoriesArr];
+
     const post = new Post({
       name: req.body.name,
       description: req.body.description,
       categories: req.body.categories,
-      p: req.body.categories,
+      p: categoriesArr,
       location: locationCoors,
       images: req.body.images,
       createdByUser: req.user._id,
@@ -48,6 +54,7 @@ class CategoryController {
   }
   upload_image(req, res, next) {
     if (!req.user) return;
+    console.log(req.body);
     const { error } = validate.post(req.body);
     if (error) {
       console.log(error);

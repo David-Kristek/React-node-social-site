@@ -26,8 +26,8 @@ var upload = multer({
       cb(null, true);
     } else {
       cb(null, false);
-      return res.json({err: "Only .png, .jpg and .jpeg format allowed!"})
-      // return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
+      // return res.json({err: "Only .png, .jpg and .jpeg format allowed!"})
+      return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
     }
   },
 });
