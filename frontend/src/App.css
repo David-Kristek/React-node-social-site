@@ -63,10 +63,18 @@
   transition: border 0.3s ease;
   transition: box-shadow 0.3s ease;
 }
+.small-input{
+  font-size: 16px;
+  padding: 6px 5px;
+  box-shadow: 2px 2px 0px #77b7db;
+}
 .input:focus {
   outline: none;
   box-shadow: 6px 6px 2px #5e9abb;
   border: 3px solid #5e9abb;
+}
+.small-input:focus {
+  box-shadow: 4px 4px 1px #5e9abb;
 }
 .fl-between {
   display: flex;
@@ -91,20 +99,20 @@
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
-.comment {
+.comment-icon {
   transition: transform 0.2s ease-in-out;
   color: rgb(20, 177, 220);
   cursor: pointer;
 }
-.comment-unactive{
+.comment-icon-unactive{
   color: white;
 }
-.comment path {
+.comment-icon path {
   stroke: rgb(20, 177, 220);
   stroke-width: 50;
 }
 .heart:hover,
-.comment:hover {
+.comment-icon:hover {
   transform: scale(1.17);
 }
 .heart-unactive {
@@ -124,4 +132,12 @@
 }
 .display-0{
   display: none;
+}
+.no-radius-border-left{
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.no-radius-border-right{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }

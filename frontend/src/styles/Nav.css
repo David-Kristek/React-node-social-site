@@ -26,13 +26,13 @@ nav {
     position: absolute;
     transition: right 0.3s ease;
   }
-  .home-nav {
-    width: 73px;
-    right: calc(10vw + 220px);
+  .posts-nav {
+    width: 70px;
+    right: calc(10vw + 225px);
   }
-  .about-nav {
-    right: calc(10vw + 115px);
-    width: 75px;
+  .chats-nav {
+    right: calc(10vw + 130px);
+    width: 70px;
   }
   .log-nav {
     right: calc(9vw);

@@ -11,7 +11,7 @@ main div {
 }
 .add-post-form {
   padding: 30px 50px;
-  height: 902px;
+  /* height: 902px; */
   background: #cdeef9;
   background: #d4f0f8;
   border-radius: 9px;
@@ -80,8 +80,8 @@ main div {
     max-height: 200px;
 }
 .upload{
-    position: absolute;
-    right: 50px;
+    width: 150px;
+    margin-left: calc(100% - 150px);
 }
 .photo-upload{
   width: 40%;

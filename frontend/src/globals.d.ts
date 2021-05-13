@@ -18,12 +18,15 @@ declare global {
     createdByUser: User;
     createdAt: Date;
     likedByUsers: otherUser[];
+    comments: Comment[];
   }
+  type Comment = { text: string; commentedByUser: otherUser };
+
   type otherUser = {
     name: string;
     email: string;
     image: string;
-    createdAt: Date;
+    createdAt: Date | null;
   };
   type mapCoors = {
     x: number;

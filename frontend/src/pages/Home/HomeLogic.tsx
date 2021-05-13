@@ -11,14 +11,14 @@ function HomeLogic(imgCount: number) {
   const [imgIndex, setImgIndex] = useState(0);
   const [rightArrow, setRightArrow] = useState<ArrowClass>();
   const [leftArrow, setLeftArrow] = useState<ArrowClass>("display-0");
-
   useEffect(() => {
-    setPage("home");
-    setNavigator("home|");
     fetchPost();
+    setPage("posts");
+    setNavigator("posts|");
   }, []);
 
   const fetchPost = () => {
+
     getPosts().then((res) => {
       console.log("fetched");
       if (!res) return;
