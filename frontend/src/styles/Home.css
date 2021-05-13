@@ -5,6 +5,7 @@
   padding: 20px 20px;
   position: relative;
   margin-bottom: 20px;
+
 }
 .post .center {
   position: relative;
@@ -77,4 +78,20 @@
 .htop * {
   margin-right: 10px;
   display: inline;
+}
+.comments-box{
+  padding: 15px 20px 0;
+}
+.comments-box .comment {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+.comments-box .pl-2{
+  /* min-width: 130px; */
+}
+.toRight{
+  display: flex;
+  justify-content: flex-end;
 }

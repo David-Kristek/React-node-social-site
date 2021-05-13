@@ -19,7 +19,7 @@ function Navigator() {
         a++; 
         let href = "";
         switch (item) {
-          case "home":
+          case "posts":
             href = "/";
             break;
           case "add post":

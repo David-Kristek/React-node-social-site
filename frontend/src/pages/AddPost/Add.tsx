@@ -20,7 +20,7 @@ interface Props {
   setPopup: (str: string | null) => void;
   setShowPopup: (bl: boolean) => void;
 }
-
+// posouvani
 function Add({ setPopup, setShowPopup }: Props) {
   const [findResults, setFindResults] = useState<LocationRes[] | null>();
   const [mapCoors, setMapCoors] = useState<mapCoors | undefined>();
@@ -39,7 +39,7 @@ function Add({ setPopup, setShowPopup }: Props) {
   const { register, handleSubmit, getValues, setValue, watch } = useForm();
   const watchLocation = watch("location");
 
-  var mapResult : LocationRes[] | null = useMemo(() => result, [result]); 
+  var mapResult: LocationRes[] | null = useMemo(() => result, [result]);
 
   useEffect(() => {
     if (watchLocation) setLoactionToFind(watchLocation);
@@ -47,14 +47,14 @@ function Add({ setPopup, setShowPopup }: Props) {
 
   const selectLocRes = (coors: mapCoors, label: string) => {
     setValue("location", label);
-    mapResult = null; 
+    mapResult = null;
     setMapCoors(coors);
   };
   const onFileChange = (e: any) => {
     setImages(e.target.files);
   };
 
-  const onSubmit = (data : any) => {
+  const onSubmit = (data: any) => {
     formSubmit({ data, images, mapCoors });
   };
   return (
@@ -165,7 +165,6 @@ function Add({ setPopup, setShowPopup }: Props) {
             </div>
           </div>
           <p className="font1">Add photos</p>
-
           <input
             type="file"
             name="imgCollection"
@@ -173,7 +172,7 @@ function Add({ setPopup, setShowPopup }: Props) {
             multiple
           />
 
-          <p className="font2 mt-1">0 photos uploaded</p>
+          <p className="font2 mt-1">{images ? images.length : 0} photos selected</p>
           <div className="photos"></div>
           <Button variant="success mt-4 font1" className="upload" type="submit">
             {loading ? (

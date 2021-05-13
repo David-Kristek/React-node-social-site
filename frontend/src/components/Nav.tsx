@@ -11,7 +11,7 @@ interface Props {
 }
 
 function Nav({ setPopup, setShowPopup }: Props) {
-  const { page, setPage, user, setUser, logout } = useGlobalContext();
+  const { page, user, logout } = useGlobalContext();
   const [underline, setUnderline] = useState(page);
   const [once, setOnce] = useState(true);
   const login = () => {
@@ -31,23 +31,23 @@ function Nav({ setPopup, setShowPopup }: Props) {
         <ul>
           <li
             onMouseOver={() => {
-              setUnderline("home");
+              setUnderline("posts");
             }}
             onMouseOut={() => {
               setUnderline(page);
             }}
           >
-            <Link to="/">Home</Link>
+            <Link to="/">Posts</Link>
           </li>
           <li
             onMouseOver={() => {
-              setUnderline("about");
+              setUnderline("chats");
             }}
             onMouseOut={() => {
               setUnderline(page);
             }}
           >
-            <Link to="/about">About</Link>
+            <Link to="/chats">Chats</Link>
           </li>
           {user.logged ? (
             <li className="nav-user">

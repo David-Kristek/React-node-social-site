@@ -41,3 +41,21 @@ export const likePost = async (postId: string) => {
     return false;
   }
 };
+export const addCommentF = async (postId: string, text: string) => {
+  var bodyFormData = new FormData();
+  bodyFormData.append("text", text);
+  try {
+    const response = await axios({
+      method: "POST",
+      url: "http://localhost:5000/api/posts/comment/" + postId,
+      headers: {
+        token: localStorage.getItem("token"),
+        "auth-type": localStorage.getItem("auth-type"),
+      },
+      data: {text: text}
+    });
+    return response;
+  } catch (err) {
+    return false;
+  }
+};
