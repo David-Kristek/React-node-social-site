@@ -10,7 +10,7 @@ interface Props {
 }
 interface Cmt {
   text: string | undefined;
-  commentedByUser: otherUser
+  commentedByUser: otherUser;
 }
 
 function SinglePostLogic({ postInfo }: Props) {
@@ -32,8 +32,10 @@ function SinglePostLogic({ postInfo }: Props) {
 
   const conSocket = () => {
     socket.on("getComments", (comments) => {
-      console.log("act");
       setComments(comments);
+    });
+    socket.on("getLikeCount", (num: number) => {
+      setlikeCount(num);
     });
   };
 
@@ -69,6 +71,7 @@ function SinglePostLogic({ postInfo }: Props) {
           setlikeCount((curLikeCount) => curLikeCount - 1);
         }
       }
+      socket.emit("likeCount", postInfo._id);
     });
   };
   const addComment = (e: any, text: string | undefined) => {
@@ -89,7 +92,7 @@ function SinglePostLogic({ postInfo }: Props) {
           },
         };
         if (!comments) return;
-        setComments([newComment,...comments]);
+        setComments([newComment, ...comments]);
       }
     });
   };

@@ -120,6 +120,10 @@ class CategoryController {
     const post = await Post.findById(postId).populate("comments.commentedByUser"); 
     return post.comments.reverse(); 
   }
+  async get_like_count(postId) {
+    const post = await Post.findById(postId); 
+    return post.likedByUsers.length; 
+  }
 
 }
 module.exports = CategoryController;

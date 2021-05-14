@@ -28,7 +28,7 @@ const postSchema = new Schema(
       {
           text: String,
         commentedByUser: {
-          type: mongoose.Schema.Types.ObjectId,
+          type: mongoose.Schema.Types.ObjectId, //lepsi dalsi model
           ref: "User",
         },
       },
