@@ -21,7 +21,7 @@ class AuthController {
       name: req.body.name,
       email: req.body.email,
       password: hashedPassword,
-      image: "zatim zadny",
+      image: "",
     });
     try {
       const save = await user.save();

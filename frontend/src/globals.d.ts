@@ -1,4 +1,6 @@
 declare global {
+  type Comment = { text: string; commentedByUser: otherUser };
+
   interface Category {
     name: string;
     _id: string;
@@ -20,7 +22,6 @@ declare global {
     likedByUsers: otherUser[];
     comments: Comment[];
   }
-  type Comment = { text: string; commentedByUser: otherUser };
 
   type otherUser = {
     name: string;
@@ -33,5 +34,4 @@ declare global {
     y: number;
   };
 }
-
 export {};

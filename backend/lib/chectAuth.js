@@ -26,7 +26,7 @@ const checkAuthenticated = async (req, res, next) => {
       user.picture = payload.picture;
       user._id = userF._id;
       req.user = user;
-    } else if (type === "JWT") {
+    } else if (type === "jwt") {
       const verified = jwt.verify(token, process.env.TOKEN_SECRET);
       req.user = await User.findOne({ _id: verified._id });
     } else {

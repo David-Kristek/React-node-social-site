@@ -116,5 +116,10 @@ class CategoryController {
     }
     return res.json({ msg: "commented" });
   }
+  async get_post_comments(postId) {
+    const post = await Post.findById(postId).populate("comments.commentedByUser"); 
+    return post.comments.reverse(); 
+  }
+
 }
 module.exports = CategoryController;

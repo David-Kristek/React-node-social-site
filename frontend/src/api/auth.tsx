@@ -35,6 +35,7 @@ export const isLogged = async (type: string | null) => {
         "auth-type": type,
       },
     });
+    console.log(res);
     if ((res.data.msg = "success" && res.data.user.email)) {
       return res.data.user; 
     } else {

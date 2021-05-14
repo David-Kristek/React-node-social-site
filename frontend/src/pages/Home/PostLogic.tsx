@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context";
 import { likePost, addCommentF } from "../../api/post";
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://localhost:5000";
+const socket = socketIOClient(ENDPOINT);
 
 interface Props {
   postInfo: Post;
+}
+interface Cmt {
+  text: string | undefined;
+  commentedByUser: otherUser
 }
 
 function SinglePostLogic({ postInfo }: Props) {
@@ -11,16 +18,24 @@ function SinglePostLogic({ postInfo }: Props) {
   const [likeCount, setlikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
   const [date, setDate] = useState("");
-  const [comments, setComments] = useState<Comment[]>();
+  const [comments, setComments] = useState<Cmt[]>();
 
   useEffect(() => {
+    conSocket();
     if (user.logged) setLiked(isLiked());
     if (!user.logged) setLiked(false);
     formatDate();
     setlikeCount(postInfo.likedByUsers.length);
-    /* @ts-ignore */
-    setComments(postInfo.comments);
+    var coms = postInfo.comments.reverse();
+    setComments(coms);
   }, [user.logged]);
+
+  const conSocket = () => {
+    socket.on("getComments", (comments) => {
+      console.log("act");
+      setComments(comments);
+    });
+  };
 
   const formatDate = () => {
     if (!postInfo.createdAt) return;
@@ -63,24 +78,30 @@ function SinglePostLogic({ postInfo }: Props) {
     addCommentF(postInfo._id, text).then((res) => {
       if (!res) return;
       if (res.data.msg === "commented") {
-        // dodelat komenatare - nutne pridat po co sam uzivatel jeden prida
-        if(!comments) return; 
-        setComments([
-          ...comments,
-          {
-            text,
-            commentedByUser: {
-              name: user.name,
-              email: "",
-              image: user.picture,
-              createdAt: null,
-            },
+        socket.emit("actComment", postInfo._id);
+        const newComment = {
+          text: text,
+          commentedByUser: {
+            name: user.name,
+            email: user.email,
+            image: user.picture,
+            createdAt: null,
           },
-        ]);
+        };
+        if (!comments) return;
+        setComments([newComment,...comments]);
       }
     });
   };
-  return { liked, likeCount, like, date, shorterLocationLabel, addComment };
+  return {
+    liked,
+    likeCount,
+    like,
+    date,
+    shorterLocationLabel,
+    addComment,
+    comments,
+  };
 }
 
 export default SinglePostLogic;

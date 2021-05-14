@@ -24,7 +24,15 @@ function Post({ postInfo }: Props) {
   const { imgIndex, toRight, toLeft, rightArrow, leftArrow } = HomeLogic(
     postInfo.images.length
   );
-  const { liked, likeCount, like, date, shorterLocationLabel, addComment } = PostLogic({
+  const {
+    liked,
+    likeCount,
+    like,
+    date,
+    shorterLocationLabel,
+    addComment,
+    comments,
+  } = PostLogic({
     postInfo,
   });
   const { user } = useGlobalContext();
@@ -112,9 +120,7 @@ function Post({ postInfo }: Props) {
             className={liked ? "heart" : "heart heart-unactive"}
             onClick={like}
           />
-          <span className="font2">
-            {postInfo.comments ? postInfo.comments.length : 0}
-          </span>
+          <span className="font2">{comments ? comments.length : 0}</span>
           {/* is commented ? */}
           <FontAwesomeIcon
             icon={faComment}
@@ -128,15 +134,21 @@ function Post({ postInfo }: Props) {
       </div>
       {showComments && (
         <div className="comments-box">
-          {postInfo.comments &&
-            postInfo.comments.map((item, index) => (
+          {comments &&
+            comments.map((item, index) => (
               <Comment
-                text={item.text}
+                text={item.text ?? ""}
                 key={index}
                 user={item.commentedByUser}
               />
             ))}
-          <form className="mr-1 mt-3" onSubmit={e => addComment(e, inputCom.current?.value)}>
+          <form
+            className="mr-1 mt-3"
+            onSubmit={(e) => {
+              addComment(e, inputCom.current?.value);
+              if(inputCom.current?.value) inputCom.current.value = ""; 
+            }}
+          >
             <input
               type="text"
               ref={inputCom}
@@ -144,8 +156,12 @@ function Post({ postInfo }: Props) {
               placeholder="Add comment"
               style={{ width: "50%" }}
             />
-            <Button variant="primary" type="submit" className="no-radius-border-left">
-              <FontAwesomeIcon icon={faPaperPlane} size="lg"/>
+            <Button
+              variant="primary"
+              type="submit"
+              className="no-radius-border-left"
+            >
+              <FontAwesomeIcon icon={faPaperPlane} size="lg" />
             </Button>
           </form>
         </div>

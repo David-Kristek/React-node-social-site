@@ -2,14 +2,14 @@ import React from "react";
 import User from "../../components/User";
 interface Props {
   user: otherUser;
-  text: string;
+  text: string | undefined;
 }
 
 function Comment({ text, user }: Props) {
   return (
     <div className="comment">
       <User user={user} bold/>
-      <span className="font3">{text}</span> 
+      <span className="font3">{text ?? ""}</span> 
     </div>
   );
 }

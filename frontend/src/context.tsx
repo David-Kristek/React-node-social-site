@@ -49,7 +49,6 @@ const AppProvider = ({ children }: Props) => {
     }
   };
   const isUserLogged = () => {
-    console.log("agih");
     const AuthType = localStorage.getItem("auth-type");
     if (AuthType) {
       isLogged(AuthType).then((res) => {
