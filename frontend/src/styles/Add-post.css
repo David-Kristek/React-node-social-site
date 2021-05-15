@@ -36,7 +36,7 @@ main div {
   justify-content: space-around;
   margin-top: 15px;
 }
-.category-box .loading-cat{
+.category-box .loading-cat {
   background-color: unset !important;
 }
 .check {
@@ -62,27 +62,69 @@ main div {
   border-radius: 4px;
   padding: 0;
 }
-.help li{
-    cursor: pointer;
-    padding: 3px 0 0 20px;
+.help li {
+  cursor: pointer;
+  padding: 3px 0 0 20px;
 }
-.help li:hover{
-    background-color: rgb(221, 223, 223);
+.help li:hover {
+  background-color: rgb(221, 223, 223);
 }
-.photos{
-    display: grid;
-    grid-template-columns: auto auto auto;
-    column-gap: 4%;
-    row-gap: 10px;
+.photos {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 4%;
+  row-gap: 10px;
 }
-.photos img{
-    max-width: 30%;
-    max-height: 200px;
+.photos img {
+  max-width: 30%;
+  max-height: 200px;
 }
-.upload{
-    width: 150px;
-    margin-left: calc(100% - 150px);
+.upload {
+  width: 150px;
+  margin-left: calc(100% - 150px);
 }
-.photo-upload{
+.photo-upload {
   width: 40%;
+}
+@media screen and (max-width: 1900px) {
+  .add-post-box {
+    width: 65%;
+  }
+}
+@media screen and (max-width: 1450px) {
+  .add-post-box {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .add-post-box {
+    width: 90%;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .add-post-form .name {
+    width: 60%;
+  }
+  .add-post-box {
+    width: 90%;
+  }
+  .add-post-form {
+    padding: 20px 25px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .category-box {
+    grid-template-columns: auto auto;
+  }
+  .fl-between {
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 600px) {
+  .add-post-form {
+    padding: 10px 15px;
+  }
+  .add-post-form .name {
+    width: 80%;
+  }
 }

@@ -1,109 +1,158 @@
 nav {
-    padding: 20px 10% 10px;
-    display: flex;
-    justify-content: space-between;
-  }
-  nav a,
-  nav a:hover {
-    text-decoration: none;
-    color: unset;
-  }
-  nav img {
-    width: 200px;
-    height: 57px;
-  }
-  nav ul {
-    display: flex;
-    list-style: none;
-    width: 350px;
-  }
-  .underline {
-    top: 58px;
-    /* width: 73px;
+  padding: 20px 10% 10px;
+  display: flex;
+  justify-content: space-between;
+}
+nav a,
+nav a:hover {
+  text-decoration: none;
+  color: unset;
+}
+nav img {
+  width: 200px;
+  height: 57px;
+}
+nav ul {
+  display: flex;
+  list-style: none;
+  width: 350px;
+}
+.underline {
+  top: 58px;
+  /* width: 73px;
     right: calc(10vw + 220px); */
-    height: 4px;
-    background-color: #31b8fa;
-    position: absolute;
-    transition: right 0.3s ease;
+  height: 4px;
+  background-color: #31b8fa;
+  position: absolute;
+  transition: right 0.3s ease;
+}
+.posts-nav {
+  width: 70px;
+  right: calc(10vw + 225px);
+}
+.chats-nav {
+  right: calc(10vw + 130px);
+  width: 70px;
+  color: rgb(140, 138, 146);
+}
+.log-nav {
+  right: calc(10vw);
+  width: 85px;
+}
+.nav-user:hover .nav-dropdown {
+  display: block;
+}
+.nav-user {
+  position: absolute;
+  right: 5vw;
+  font-size: 1.5em;
+}
+.nav-user svg {
+  padding-left: 8px;
+  position: absolute;
+  color: #31b8fa;
+  top: 5px;
+}
+nav ul li {
+  display: block;
+  height: 70px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 20px;
+}
+nav ul li:nth-child(3) {
+  padding-left: 2rem;
+}
+nav ul li svg {
+  padding-left: 15px;
+  position: absolute;
+  color: #31b8fa;
+  top: 23px;
+}
+.nav-profile-pic {
+  margin-left: 10px; 
+  border-radius: 50%;
+  max-width: 40px;
+  max-height: 40px;
+}
+.nav-dropdown {
+  display: none;
+  margin-top: 5px;
+  position: absolute;
+}
+.nav-dropdown ul {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  border: 3px solid rgb(129, 129, 129);
+  border-radius: 5%;
+  margin-left: 1vw;
+}
+.nav-dropdown ul li {
+  text-align: center;
+  font-size: 0.83em;
+  height: auto;
+  padding: 3px 0 !important;
+  border-top: 2px solid rgb(161, 161, 161);
+  width: 100%;
+  background-color: rgb(248, 248, 248);
+}
+.nav-dropdown ul li:nth-child(1) {
+  border: none;
+}
+.nav-dropdown ul li:hover {
+  background-color: rgb(236, 236, 236);
+}
+
+@media screen and (max-width: 1800px) {
+  nav {
+    padding: 20px 15% 10px;
   }
   .posts-nav {
-    width: 70px;
-    right: calc(10vw + 225px);
+    right: calc(15vw + 225px);
   }
   .chats-nav {
-    right: calc(10vw + 130px);
-    width: 70px;
-    color: rgb(140, 138, 146);
+    right: calc(15vw + 130px);
   }
   .log-nav {
-    right: calc(9vw);
-    width: 85px;
+    right: calc(15vw);
   }
-  .nav-user:hover .nav-dropdown {
-    display: block;
+}
+
+@media screen and (max-width: 750px) {
+  nav {
+    justify-content: center;
   }
-  .nav-user {
-    position: absolute;
-    right: 5vw;
-    font-size: 1.5em;
-  }
-  .nav-user svg {
-    padding-left: 8px;
-    position: absolute;
-    color: #31b8fa;
-    top: 5px;
-  }
-  nav ul li {
-    display: block;
-    height: 70px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0 20px;
-  }
-  nav ul li:nth-child(3) {
-    padding-left: 2rem;
-  }
-  nav ul li svg {
-    padding-left: 5px;
-    position: absolute;
-    color: #31b8fa;
-    top: 23px;
-  }
-  .nav-profile-pic {
-    /* padding-left:  */
-    position: absolute;
-    left: 10.2vw;
-    border-radius: 50%;
-    max-width: 40px;
-    max-height: 40px;
-  }
-  .nav-dropdown {
+  nav img {
     display: none;
-    margin-top: 5px;
-    position: absolute;
   }
-  .nav-dropdown ul {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 120px;
-    border: 3px solid rgb(129, 129, 129);
-    border-radius: 5%;
-    margin-left: 1vw;
+  .post .top {
+    font-size: 13px !important;
   }
-  .nav-dropdown ul li {
-    text-align: center;
-    font-size: 0.83em;
-    height: auto;
-    padding: 3px 0 !important;
-    border-top: 2px solid rgb(161, 161, 161);
-    width: 100%;
-    background-color: rgb(248, 248, 248);
+  .post {
+    padding: 10px !important;
   }
-  .nav-dropdown ul li:nth-child(1) {
-    border: none;
+  .htop .category {
+    display: inline !important;
+    font-size: 13px;
+    padding: 3px 7px;
   }
-  .nav-dropdown ul li:hover {
-    background-color: rgb(236, 236, 236);
+  .svg-inline--fa.fa-w-16 {
+    width: 25px;
   }
+  /* dodelat */
+  .posts-nav {
+    right: calc(24.5vw + 225px);
+  }
+  .chats-nav {
+    right: calc(24.5vw + 130px);
+  }
+  .log-nav {
+    right: calc(24.5vw);
+  }
+  nav .nav-profile-pic {
+    display: inline;
+  }
+}
