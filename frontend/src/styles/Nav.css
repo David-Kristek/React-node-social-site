@@ -33,6 +33,7 @@ nav {
   .chats-nav {
     right: calc(10vw + 130px);
     width: 70px;
+    color: rgb(140, 138, 146);
   }
   .log-nav {
     right: calc(9vw);

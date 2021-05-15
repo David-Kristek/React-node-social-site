@@ -22,7 +22,6 @@ const userSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
       max: 1024,
       min: 6,
     },

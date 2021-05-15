@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-
+import ReactLoading from "react-loading";
 import { useGlobalContext } from "../../context";
 import HomeLogic from "./HomeLogic";
 import Post from "./Post";
@@ -12,11 +12,14 @@ function Homie() {
   return (
     <main className="home">
       {loading ? (
-        "loading"
+        <div className="center mt-5">
+          <ReactLoading type="bars" color="rgb(140, 138, 146)" width="10%" />
+        </div>
       ) : (
-        <>{posts && posts.map((item, index) => 
-        <Post postInfo={item} key={index}/>
-        )}</>
+        <>
+          {posts &&
+            posts.map((item, index) => <Post postInfo={item} key={index} />)}
+        </>
       )}
     </main>
   );

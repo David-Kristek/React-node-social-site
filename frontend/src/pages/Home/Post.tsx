@@ -39,7 +39,6 @@ function Post({ postInfo }: Props) {
   const [showComments, setShowComments] = useState(false);
   const inputCom = useRef<HTMLInputElement>(null);
 
-  // nutne dodelat loading
   return (
     <div className="post">
       <div className="top">
@@ -121,7 +120,6 @@ function Post({ postInfo }: Props) {
             onClick={like}
           />
           <span className="font2">{comments ? comments.length : 0}</span>
-          {/* is commented ? */}
           <FontAwesomeIcon
             icon={faComment}
             size="2x"

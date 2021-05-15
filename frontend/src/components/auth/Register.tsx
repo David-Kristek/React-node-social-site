@@ -33,6 +33,7 @@ function Register({ close, setPopup, setNowLogin }: Props) {
         setNowLogin(true);
         setPopup("login");
       } else {
+        console.log(res);
         setError(res);
       }
       setLoading(false);

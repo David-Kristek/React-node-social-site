@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context";
 import { likePost, addCommentF } from "../../api/post";
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "http://10.0.0.7:5000";
 const socket = socketIOClient(ENDPOINT);
 
 interface Props {
