@@ -23,6 +23,7 @@ export const makeAdmin = (userId: string) => {
   return fetchData("GET", "users/admin/" + userId);
 };
 export const deleteAdmin = (userId: string) => {
+  console.log(userId);
   return fetchData("DELETE", "users/admin/" + userId);
 };
 export const deleteUser = (userId: string) => {
