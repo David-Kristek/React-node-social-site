@@ -19,7 +19,7 @@ class GoogleAuthController {
       return res.statuts(400).send(err);
     }
     const payload = ticket.getPayload();
-    const user = await {
+    const user = {
       name: payload.name,
       email: payload.email,
       image: payload.picture,

@@ -87,7 +87,7 @@ function SinglePostLogic({ postInfo }: Props) {
           commentedByUser: {
             name: user.name,
             email: user.email,
-            image: user.picture,
+            image: user.image,
             createdAt: null,
           },
         };

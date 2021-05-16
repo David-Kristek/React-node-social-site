@@ -52,11 +52,11 @@ function Nav({ setPopup, setShowPopup }: Props) {
           {user.logged ? (
             <li className="nav-user">
               {user.name}
-              {user.picture === "zatim zadny" || !user.picture ? (
+              {!user.image ? (
                 <FontAwesomeIcon icon={faUser} size="lg" />
               ) : (
                 <img
-                  src={user.picture}
+                  src={user.image}
                   alt="profile picture"
                   className="nav-profile-pic"
                 />

@@ -8,13 +8,13 @@ interface Props {
 }
 function User({ user, bold }: Props) {
   const userEl = useRef<HTMLDivElement>(null);
-
+  
   var userStyles = {
     display: "flex",
     alignItems: "center",
   };
   if(bold)userStyles = {...userStyles, ...{"fontWeight": "bold"}}
-
+  if(!user) return (<> </>)
   return (
     <div style={userStyles} ref={userEl}>
       {user.image ? (

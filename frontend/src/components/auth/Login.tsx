@@ -29,7 +29,7 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
           logged: true,
           name: res.user.name,
           email: res.user.email,
-          picture: res.user.picture,
+          image: res.user.picture,
         });
         localStorage.setItem("auth-type", "jwt");
         setError(null);
@@ -49,7 +49,7 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
           logged: true,
           name: res?.user.name,
           email: res?.user.email,
-          picture: res?.user.picture,
+          image: res?.user.picture,
         });
         setPopup("");
       }

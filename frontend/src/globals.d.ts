@@ -1,6 +1,6 @@
 declare global {
   type Comment = { text: string; commentedByUser: otherUser };
-
+  type Method = "GET" | "POST" | "DELETE" | "PUT";
   interface Category {
     name: string;
     _id: string;

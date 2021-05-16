@@ -5,7 +5,7 @@ const app = express();
 
 const checkAuth = require("./lib/chectAuth");
 const isAdmin = require("./lib/isAdmin");
-
+const userAdmin = require('./controllers/Admin/UserAdminController');
 const http = require("http").Server(app);
 const io = require("socket.io")(http, {
   cors: {
@@ -43,5 +43,9 @@ const test = () => {
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/category", require("./routes/category"));
 app.use("/api/posts", require("./routes/posts"));
+
+
+// first admin route
+app.get("/api/admin/first", checkAuth, userAdmin.first_admin, require("./routes/admin"));
 
 app.use("/api/admin", checkAuth, isAdmin, require("./routes/admin"));

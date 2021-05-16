@@ -23,7 +23,7 @@ interface User {
   logged: boolean;
   name: string;
   email: string;
-  picture: string;
+  image: string;
 }
 
 const AppProvider = ({ children }: Props) => {
@@ -34,7 +34,7 @@ const AppProvider = ({ children }: Props) => {
     logged: false,
     name: "",
     email: "",
-    picture: "",
+    image: "",
   });
   const logout = () => {
     if (user.logged) {
@@ -44,20 +44,20 @@ const AppProvider = ({ children }: Props) => {
         logged: false,
         name: "",
         email: "",
-        picture: "",
+        image: "",
       });
     }
   };
   const isUserLogged = () => {
     const AuthType = localStorage.getItem("auth-type");
     if (AuthType) {
-      isLogged(AuthType).then((res) => {
+      isLogged(AuthType).then((res) => {        
         if (res) {
           setUser({
             logged: true,
             name: res.name,
             email: res.email,
-            picture: res.picture,
+            image: res.image,
           });
         }
       });
@@ -67,6 +67,9 @@ const AppProvider = ({ children }: Props) => {
   useEffect(() => {
     isUserLogged();
   }, []);
+  useEffect(() => {
+    console.log(user);
+  }, [user])
 
   return (
     <AppContext.Provider
