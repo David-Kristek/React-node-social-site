@@ -28,15 +28,15 @@ nav ul {
 }
 .posts-nav {
   width: 70px;
-  right: calc(10vw + 225px);
+  right: calc(10vw + 268px);
 }
 .chats-nav {
-  right: calc(10vw + 130px);
+  right: calc(10vw + 170px);
   width: 70px;
   color: rgb(140, 138, 146);
 }
 .log-nav {
-  right: calc(10vw);
+  right: calc(12vw);
   width: 85px;
 }
 .nav-user:hover .nav-dropdown {

@@ -21,7 +21,7 @@ class CategoryController {
     return res.json({ msg: "Category uploaded" });
   }
   async get(req, res) {
-    const categories = await Category.find();
+    const categories = await Category.find({ approved : true});
     return res.send(categories);
   }
 }

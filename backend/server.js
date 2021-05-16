@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const app = express();
 
+const checkAuth = require("./lib/chectAuth");
+const isAdmin = require("./lib/isAdmin");
+
 const http = require("http").Server(app);
 const io = require("socket.io")(http, {
   cors: {
@@ -30,11 +33,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+// sockets :
+require("./Sockets")(io);
 
-// socket.emit("FromAPI", response);
-require('./Sockets')(io);
-
+const test = () => {
+  console.log("healllo");
+};
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/category", require("./routes/category"));
 app.use("/api/posts", require("./routes/posts"));
+
+app.use("/api/admin", checkAuth, isAdmin, require("./routes/admin"));

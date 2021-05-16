@@ -4,8 +4,6 @@ import { useGlobalContext } from "../../context";
 import { getCategory } from "../../api/category";
 import { addPost } from "../../api/post";
 
-
-
 function AddLogic() {
   const [categories, setCategories] = useState<Category[] | null>();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -20,12 +18,7 @@ function AddLogic() {
     setNavigator("posts|add post");
 
     getCategory().then((res) => {
-      if (res) {
-        const filCategory = res.data.filter(
-          (item: any) => item.approved === true
-        );
-        setCategories(filCategory);
-      }
+      if (res) setCategories(res.data);
     });
   }, []);
 
@@ -94,7 +87,7 @@ function AddLogic() {
     msg,
     closeAlert,
     loading,
-    setError
+    setError,
   };
 }
 

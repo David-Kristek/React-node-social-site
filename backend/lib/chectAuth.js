@@ -20,12 +20,7 @@ const checkAuthenticated = async (req, res, next) => {
       });
       if (!ticket) return res.status(200).json({ err: "unauthorized2" });
       const payload = ticket.getPayload();
-      userF = await User.findOne({ email: payload.email });
-      user.name = payload.name;
-      user.email = payload.email;
-      user.picture = payload.picture;
-      user._id = userF._id;
-      req.user = user;
+      req.user = await User.findOne({ email: payload.email });
     } else if (type === "jwt") {
       const verified = jwt.verify(token, process.env.TOKEN_SECRET);
       req.user = await User.findOne({ _id: verified._id });

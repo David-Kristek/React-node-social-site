@@ -27,10 +27,10 @@ function UserRoutes() {
         <Route exact path="/add">
           <Add setPopup={setPopup} setShowPopup={setShowPopup} />
         </Route>
-        <Route exact path="/chats">
+        <Route path="/chats">
           <About />
         </Route>
-        <Route path="*">
+        <Route path='*'>
           <p className="text-danger">Nothings 404!</p>
         </Route>
       </AppContainer>
