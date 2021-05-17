@@ -1,14 +1,22 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Badge } from "react-bootstrap";
 import "../../styles/Admin.css";
 import User from "../../components/User";
+import { categoryAlert } from "../../api/admin";
 interface Props {
   children: ReactNode;
 }
 
 function AdminPanel({ children }: Props) {
   const location = useLocation();
+  const [categoriesAlert, setCategoriesAlert] = useState(0);
+  useEffect(() => {
+    categoryAlert().then((res) => {
+      if (!res) return;
+      if ("msg" in res.data) setCategoriesAlert(res.data.msg);
+    });
+  }, []);
   return (
     <>
       <div className="d-flex">
@@ -31,7 +39,7 @@ function AdminPanel({ children }: Props) {
               >
                 Categories
                 <Badge variant="danger" className="ml-2">
-                  2
+                  {categoriesAlert}
                 </Badge>
               </li>
             </Link>

@@ -5,6 +5,9 @@ declare global {
     name: string;
     _id: string;
     approved: boolean;
+    createdByUser: {
+      name: string;
+    };
   }
   interface Post {
     _id: string;

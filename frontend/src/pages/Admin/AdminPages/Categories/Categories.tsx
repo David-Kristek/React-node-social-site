@@ -1,28 +1,55 @@
-import React from "react";
 import { Table, Button } from "react-bootstrap";
+import { approveCategory, deleteCategory } from "../../../../api/admin";
 import InfoBox from "../InfoBox";
-
+import CategoriesLogic from "./CategoriesLogic";
 function Categories() {
+  const {
+    loading,
+    approvedCategories,
+    notApprovedCategories,
+    addCategoryForm,
+    categoryInput,
+    approveCategoryBt,
+    deleteCategoryBt,
+  } = CategoriesLogic();
+  if (loading) return <p className="heading">Categoires</p>;
+
   return (
     <div>
       <p className="heading">Categoires</p>
       <div className="infoBoxesBox">
         <InfoBox
           text="Number of approved categories"
-          number="4"
+          number={approvedCategories ? approvedCategories.length : 0}
           background="#14C399"
           color="white"
         />
         <InfoBox
           text="Number of categories to approve"
-          number="1"
+          number={notApprovedCategories ? notApprovedCategories.length : 0}
           background="#145AC3"
           color="white"
         />
       </div>
       <p>Add category</p>
-      <input type="text" className="input small-input no-radius-border-right" />
-      <Button variant="success" className="no-radius-border-left">Confirm</Button>
+      <form
+        onSubmit={(e) => {
+          addCategoryForm(e);
+        }}
+      >
+        <input
+          type="text"
+          className="input small-input no-radius-border-right"
+          ref={categoryInput}
+        />
+        <Button
+          variant="success"
+          className="no-radius-border-left"
+          type="submit"
+        >
+          Confirm
+        </Button>
+      </form>
       <p>Approved categories</p>
       <Table striped bordered hover size="sm">
         <thead>
@@ -34,15 +61,28 @@ function Categories() {
           </tr>
         </thead>
         <tbody>
-          {/* set value - useForm */}
-          <tr>
-            <td>1</td>
-            <td>Kolo</td>
-            <td>David Kristek</td>
-            <th>
-              <Button variant="danger">Remove user</Button>
-            </th>
-          </tr>
+          {approvedCategories &&
+            approvedCategories.map((category, index) => (
+              <tr key={index}>
+                <td>{index}</td>
+                <td>{category.name}</td>
+                <td>
+                  {category.createdByUser
+                    ? category.createdByUser.name
+                    : "user deleted"}
+                </td>
+                <td>
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      deleteCategoryBt(category._id);
+                    }}
+                  >
+                    Remove category
+                  </Button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
       <p>Categories to approve</p>
@@ -57,18 +97,38 @@ function Categories() {
           </tr>
         </thead>
         <tbody>
-          {/* set value - useForm */}
-          <tr>
-            <td>1</td>
-            <td>Kolo</td>
-            <td>David Kristek</td>
-            <th>
-              <Button variant="success">Approve category</Button>
-            </th>
-            <th>
-              <Button variant="danger">Remove category</Button>
-            </th>
-          </tr>
+          {notApprovedCategories &&
+            notApprovedCategories.map((category, index) => (
+              <tr key={index}>
+                <td>{index}</td>
+                <td>{category.name}</td>
+                <td>
+                  {category.createdByUser
+                    ? category.createdByUser.name
+                    : "user deleted"}
+                </td>
+                <td>
+                  <Button
+                    variant="success"
+                    onClick={() => {
+                      approveCategoryBt(category._id);
+                    }}
+                  >
+                    Approve category
+                  </Button>
+                </td>
+                <td>
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      deleteCategoryBt(category._id);
+                    }}
+                  >
+                    Remove category
+                  </Button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </div>

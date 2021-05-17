@@ -2,7 +2,7 @@ const Category = require("../../modules/Category");
 
 module.exports = {
   all_categories: async (req, res) => {
-    const categories = await Category.find();
+    const categories = await Category.find().populate({path: "createdByUser", select: ["name"]});
     return res.send(categories);
   },
   add_approved_category: async (req, res) => {
@@ -27,8 +27,11 @@ module.exports = {
   approve_category: async (req, res) => {
     const { categoryId } = req.params;
     try {
-      const category = await Category.updateOne({ _id: categoryId }, { approved: true });
-      return res.json({ msg: "Category approved "});
+      const category = await Category.updateOne(
+        { _id: categoryId },
+        { approved: true }
+      );
+      return res.json({ msg: "Category approved " });
     } catch (err) {
       return res.json({ err: err });
     }
@@ -41,5 +44,9 @@ module.exports = {
     } catch (err) {
       return res.json({ err: err });
     }
+  },
+  number_cateogories_toapprove: async (req, res) => {
+    const posts = await Category.find({ approved: false });
+    return res.json({msg: posts.length});
   },
 };

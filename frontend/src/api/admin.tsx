@@ -41,3 +41,10 @@ export const approveCategory = (categoryId: string) => {
 export const addCategory = async (body: any) => {
   return fetchData("POST", "categories", body);
 };
+export const categoryAlert = async () => {
+  return fetchData("GET", "categories/naprovedcount");
+};
+export const deleteCategory = async (categoryId : string) => {
+  return fetchData("DELETE", "categories/" + categoryId);
+};
+

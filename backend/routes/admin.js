@@ -10,6 +10,7 @@ router.delete("/users/admin/:userId", isMainAdmin, UserList.remove_admin);
 router.delete("/users/:userId", UserList.remove_user);
 
 router.get("/categories", Categories.all_categories);
+router.get("/categories/naprovedcount", Categories.number_cateogories_toapprove);
 router.get("/categories/:categoryId", Categories.approve_category);
 router.post("/categories", Categories.add_approved_category);
 router.delete("/categories/:categoryId", Categories.delete_category);
