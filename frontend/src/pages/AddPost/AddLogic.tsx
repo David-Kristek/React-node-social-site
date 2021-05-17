@@ -1,22 +1,25 @@
 import { useState, useEffect } from "react";
 import { useGlobalContext } from "../../context";
+import { useHistory } from "react-router-dom";
 
 import { getCategory } from "../../api/category";
 import { addPost } from "../../api/post";
 
 function AddLogic() {
+  const { user } = useGlobalContext();
   const [categories, setCategories] = useState<Category[] | null>();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
+  const history = useHistory();
 
   const { setPage, page, setNavigator } = useGlobalContext();
 
   useEffect(() => {
+    if (!user) history.push("/");
     setPage("posts");
     setNavigator("posts|add post");
-
     getCategory().then((res) => {
       if (res) setCategories(res.data);
     });

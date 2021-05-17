@@ -22,13 +22,13 @@ function SinglePostLogic({ postInfo }: Props) {
 
   useEffect(() => {
     conSocket();
-    if (user.logged) setLiked(isLiked());
-    if (!user.logged) setLiked(false);
+    setLiked(isLiked());
+    if (!user) setLiked(false);
     formatDate();
     setlikeCount(postInfo.likedByUsers.length);
     var coms = postInfo.comments.reverse();
     setComments(coms);
-  }, [user.logged]);
+  }, [user]);
 
   const conSocket = () => {
     socket.on("getComments", (comments) => {
@@ -52,6 +52,7 @@ function SinglePostLogic({ postInfo }: Props) {
   };
 
   const isLiked = () => {
+    if(!user) return false; 
     const { likedByUsers } = postInfo;
     if (likedByUsers.filter((userL) => userL.email == user.email).length > 0)
       return true;
@@ -76,7 +77,7 @@ function SinglePostLogic({ postInfo }: Props) {
   };
   const addComment = (e: any, text: string | undefined) => {
     e.preventDefault();
-    if (!text || !user.logged) return;
+    if (!text || !user) return;
 
     addCommentF(postInfo._id, text).then((res) => {
       if (!res) return;

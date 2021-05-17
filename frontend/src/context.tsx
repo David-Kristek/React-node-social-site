@@ -5,12 +5,11 @@ import { isLogged } from "./api/auth";
 interface AppContext {
   page: String;
   setPage: (str: string) => void;
-  user: User;
+  user: User | null;
   setUser: (pr: User) => void;
   navigator: string;
   setNavigator: (pr: string) => void;
   logout: () => void;
-
 }
 
 const AppContext = React.createContext<AppContext>({} as AppContext);
@@ -24,40 +23,32 @@ interface User {
   name: string;
   email: string;
   image: string;
+  admin: boolean;
 }
 
 const AppProvider = ({ children }: Props) => {
   // const [popUp, setPopup] = useState<string>("");
   const [page, setPage] = useState<string>("");
   const [navigator, setNavigator] = useState<string>("");
-  const [user, setUser] = useState<User>({
-    logged: false,
-    name: "",
-    email: "",
-    image: "",
-  });
+  const [user, setUser] = useState<User | null>(null);
   const logout = () => {
-    if (user.logged) {
+    if (user?.logged) {
       localStorage.removeItem("token");
       localStorage.removeItem("auth-type");
-      setUser({
-        logged: false,
-        name: "",
-        email: "",
-        image: "",
-      });
+      setUser(null);
     }
   };
   const isUserLogged = () => {
     const AuthType = localStorage.getItem("auth-type");
     if (AuthType) {
-      isLogged(AuthType).then((res) => {        
+      isLogged(AuthType).then((res) => {
         if (res) {
           setUser({
             logged: true,
             name: res.name,
             email: res.email,
             image: res.image,
+            admin: res.admin ? res.admin.isAdmin : false,
           });
         }
       });
@@ -69,7 +60,7 @@ const AppProvider = ({ children }: Props) => {
   }, []);
   useEffect(() => {
     console.log(user);
-  }, [user])
+  }, [user]);
 
   return (
     <AppContext.Provider

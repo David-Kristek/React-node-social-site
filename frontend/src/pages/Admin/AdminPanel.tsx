@@ -1,9 +1,11 @@
 import { ReactNode, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { Badge } from "react-bootstrap";
 import "../../styles/Admin.css";
 import User from "../../components/User";
 import { categoryAlert } from "../../api/admin";
+import { useGlobalContext } from "../../context";
+
 interface Props {
   children: ReactNode;
 }
@@ -11,7 +13,10 @@ interface Props {
 function AdminPanel({ children }: Props) {
   const location = useLocation();
   const [categoriesAlert, setCategoriesAlert] = useState(0);
+  const { user } = useGlobalContext();
+  const history = useHistory();
   useEffect(() => {
+    if (!user) history.push("/");
     categoryAlert().then((res) => {
       if (!res) return;
       if ("msg" in res.data) setCategoriesAlert(res.data.msg);
@@ -38,9 +43,11 @@ function AdminPanel({ children }: Props) {
                 }`}
               >
                 Categories
-                <Badge variant="danger" className="ml-2">
-                  {categoriesAlert}
-                </Badge>
+                {categoriesAlert !== 0 ?? (
+                  <Badge variant="danger" className="ml-2">
+                    {categoriesAlert}
+                  </Badge>
+                )}
               </li>
             </Link>
             <Link to="/admin/posts" className="full-width">

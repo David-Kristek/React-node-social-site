@@ -49,7 +49,7 @@ function Nav({ setPopup, setShowPopup }: Props) {
           >
             <Link to="/chats">Chats</Link>
           </li>
-          {user.logged ? (
+          {user ? (
             <li className="nav-user">
               {user.name}
               {!user.image ? (

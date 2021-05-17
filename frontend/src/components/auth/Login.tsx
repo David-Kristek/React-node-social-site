@@ -30,6 +30,7 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
           name: res.user.name,
           email: res.user.email,
           image: res.user.picture,
+          admin: res.user.admin.isAdmin,
         });
         localStorage.setItem("auth-type", "jwt");
         setError(null);
@@ -50,6 +51,7 @@ function Login({ close, setPopup, nowLogin, setNowLogin }: Props) {
           name: res?.user.name,
           email: res?.user.email,
           image: res?.user.picture,
+          admin: res.user.admin.isAdmin,
         });
         setPopup("");
       }
