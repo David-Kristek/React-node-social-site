@@ -4,17 +4,20 @@ import { faFileExport, faUser } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   user: otherUser;
-  bold?: boolean; 
+  bold?: boolean;
 }
 function User({ user, bold }: Props) {
   const userEl = useRef<HTMLDivElement>(null);
-  
+
   var userStyles = {
     display: "flex",
     alignItems: "center",
   };
-  if(bold)userStyles = {...userStyles, ...{"fontWeight": "bold"}}
-  if(!user) return (<> </>)
+  if (bold) userStyles = { ...userStyles, ...{ fontWeight: "bold" } };
+  if (!user) {
+    console.log(user);
+    return <> </>;
+  }
   return (
     <div style={userStyles} ref={userEl}>
       {user.image ? (

@@ -48,14 +48,16 @@ function Post({ postInfo }: Props) {
           <span className="pl-2">
             {postInfo.location && postInfo.location.label.length > 30 ? (
               <>
-                <FontAwesomeIcon icon={faMapMarkedAlt} size="lg" />{" "}
+                <FontAwesomeIcon icon={faMapMarkedAlt} size="lg" />
                 {shorterLocationLabel()}
               </>
             ) : (
-              <>
-                <FontAwesomeIcon icon={faMapMarkedAlt} size="lg" />{" "}
-                {postInfo.location.label}
-              </>
+              postInfo.location && (
+                <>
+                  <FontAwesomeIcon icon={faMapMarkedAlt} size="lg" />
+                  {postInfo.location.label}
+                </>
+              )
             )}
           </span>
         </div>
@@ -144,7 +146,7 @@ function Post({ postInfo }: Props) {
             className="mr-1 mt-3"
             onSubmit={(e) => {
               addComment(e, inputCom.current?.value);
-              if(inputCom.current?.value) inputCom.current.value = ""; 
+              if (inputCom.current?.value) inputCom.current.value = "";
             }}
           >
             <input

@@ -1,10 +1,10 @@
 import React from 'react'
 
-function mainhelper() {
+function Mainhelper() {
     const delay = (delay: number) => {
         return new Promise((res) => setTimeout(res, delay));
       };
     return {delay}
 }
 
-export default mainhelper
+export default Mainhelper; 

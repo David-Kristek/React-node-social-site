@@ -46,6 +46,7 @@ function SinglePostLogic({ postInfo }: Props) {
   };
 
   const shorterLocationLabel = () => {
+    if(!postInfo.location) return; 
     let label = postInfo.location.label;
     let labelArr = label.split(",");
     return labelArr[0];

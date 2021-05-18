@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useGlobalContext } from "../../context";
 import { useHistory } from "react-router-dom";
-
+import MainHelper from "../../helpers/mainhelper"; 
 import { getCategory } from "../../api/category";
 import { addPost } from "../../api/post";
 
@@ -14,6 +14,7 @@ function AddLogic() {
   const [msg, setMsg] = useState("");
   const history = useHistory();
 
+  const {delay} = MainHelper(); 
   const { setPage, page, setNavigator } = useGlobalContext();
 
   useEffect(() => {
@@ -67,8 +68,10 @@ function AddLogic() {
         setError(res.err);
       } else if ("msg" in res) {
         setError("");
-        setMsg(res.err);
-        //timeuot 5s pak redirect
+        setMsg(res.msg);
+        delay(3).then(() => {
+          history.push("/");
+        }); 
       } else {
         setMsg("");
         setError("Something went wrong");
