@@ -1,0 +1,151 @@
+.font1 {
+  font-size: 22px;
+}
+.font2 {
+  font-size: 20px;
+}
+.font3 {
+  font-size: 18px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+.point {
+  cursor: pointer;
+}
+.link {
+  color: #2360d8 !important;
+  text-decoration-line: underline !important;
+  cursor: pointer;
+}
+
+.submit {
+  width: 80px;
+}
+.checkmark {
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkmark:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.input {
+  padding: 12px 10px;
+  border: 2px solid #71b0d3;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 0px #77b7db;
+  border-radius: 4px;
+  font-size: 20px;
+  transition: border 0.3s ease;
+  transition: box-shadow 0.3s ease;
+}
+.small-input {
+  font-size: 16px;
+  padding: 6px 5px;
+  box-shadow: 2px 2px 0px #77b7db;
+}
+.input:focus {
+  outline: none;
+  box-shadow: 6px 6px 2px #5e9abb;
+  border: 3px solid #5e9abb;
+}
+.small-input:focus {
+  box-shadow: 4px 4px 1px #5e9abb;
+}
+.fl-between {
+  display: flex;
+  justify-content: space-between;
+}
+.navigator {
+  position: absolute;
+  left: 4vw;
+}
+.category {
+  background: #bed7d5;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  padding: 5px 13px;
+  font-size: 20px;
+  align-items: center;
+  border-radius: 5px;
+}
+.heart {
+  color: crimson;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+.comment-icon {
+  transition: transform 0.2s ease-in-out;
+  color: rgb(20, 177, 220);
+  cursor: pointer;
+}
+.comment-icon-unactive {
+  color: white;
+}
+.comment-icon path {
+  stroke: rgb(20, 177, 220);
+  stroke-width: 50;
+}
+.heart:hover,
+.comment-icon:hover {
+  transform: scale(1.17);
+}
+.heart-unactive {
+  color: white;
+}
+.heart-unactive path {
+  stroke: crimson;
+  stroke-width: 50;
+}
+.profile-pic {
+  border-radius: 50%;
+  max-width: 30px;
+  max-height: 30px;
+}
+.display {
+  display: block;
+}
+.display-0 {
+  display: none;
+}
+.no-radius-border-left {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.no-radius-border-right {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.flex-center-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.full-width{
+  width: 100%;
+}
