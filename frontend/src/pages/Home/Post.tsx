@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
 import {
@@ -38,7 +38,6 @@ function Post({ postInfo }: Props) {
   const { user } = useGlobalContext();
   const [showComments, setShowComments] = useState(false);
   const inputCom = useRef<HTMLInputElement>(null);
-
   return (
     <div className="post">
       <div className="top">
@@ -69,17 +68,18 @@ function Post({ postInfo }: Props) {
               if (index === imgIndex) position = "active";
               if (index === imgIndex + 1) position = "right";
               if (index === imgIndex - 1) position = "left";
+
               return (
                 <img
                   key={index}
-                  src={process.env.PUBLIC_URL + "/uploads/" + image}
+                  src={image}
                   className={position}
                 />
               );
             })
           : postInfo.images.length > 0 && (
               <img
-                src={process.env.PUBLIC_URL + "/uploads/" + postInfo.images[0]}
+                src={postInfo.images[0]}
                 className="active"
               />
             )}
