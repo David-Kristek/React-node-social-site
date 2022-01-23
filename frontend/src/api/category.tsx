@@ -4,7 +4,7 @@ export const getCategory = async () => {
   try {
     const response = await axios({
       method: "GET",
-      url: "http://10.0.0.7:5000/api/category",
+      url: "https://social-site-server.herokuapp.com/api/category",
     });
     return response;
   } catch (err) {
@@ -18,7 +18,7 @@ export const addCategory = async (body : any) => {
   try {
     const response = await axios({
       method: "POST",
-      url: "http://10.0.0.7:5000/api/category/add",
+      url: "https://social-site-server.herokuapp.com/api/category/add",
       data: body, 
       headers: {
         "token": localStorage.getItem("token"),

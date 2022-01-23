@@ -13,7 +13,7 @@ function AdminRoutes() {
     <div>
       <AdminPanel>
         <Switch>
-        <Route exact path={path}>
+          <Route exact path={path}>
             <Userlist />
           </Route>
           <Route exact path={`${path}/categories`}>

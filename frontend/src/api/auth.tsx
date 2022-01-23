@@ -4,7 +4,7 @@ export const googleLogin = async (response: any) => {
   try {
     const resp = await axios({
       method: "POST",
-      url: "http://10.0.0.7:5000/api/auth/googlelogin",
+      url: "https://social-site-server.herokuapp.com/api/auth/googlelogin",
       data: {
         tokenId: { tokenId: response.tokenId },
       },
@@ -29,7 +29,7 @@ export const isLogged = async (type: string | null) => {
   try {
     const res = await axios({
       method: "GET",
-      url: "http://10.0.0.7:5000/api/auth/is_logged",
+      url: "https://social-site-server.herokuapp.com/api/auth/is_logged",
       headers: {
         "token": localStorage.getItem("token"),
         "auth-type": type,
@@ -49,8 +49,8 @@ export const login = async (data: any) => {
   try {
     const resp = await axios({
       method: "POST",
-      url: "http://10.0.0.7:5000/api/auth/login",
-      data: { body: JSON.stringify(data) },
+      url: "https://social-site-server.herokuapp.com/api/auth/login",
+      data: data,
     });
     const token = resp.data.token;
     console.log(resp);
@@ -72,7 +72,7 @@ export const register = async (data: any) => {
   try {
     const resp = await axios({
       method: "POST",
-      url: "http://10.0.0.7:5000/api/auth/register",
+      url: "https://social-site-server.herokuapp.com/api/auth/register",
       data: { body: JSON.stringify(data) },
     });
     console.log(resp);

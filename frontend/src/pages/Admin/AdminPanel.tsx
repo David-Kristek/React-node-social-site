@@ -16,7 +16,11 @@ function AdminPanel({ children }: Props) {
   const { user } = useGlobalContext();
   const history = useHistory();
   useEffect(() => {
-    if (!user) history.push("/");
+    if (user) {
+      if (!user?.admin) {
+        history.push("/");
+      }
+    }
     categoryAlert().then((res) => {
       if (!res) return;
       if ("msg" in res.data) setCategoriesAlert(res.data.msg);
